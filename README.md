@@ -63,63 +63,63 @@ Pins: 5.0V, GND, PWRIN, PWM7, PWM6, PWM5, PWM4, PWM3, PWM2, PWM1, PWM0, VCC, SDA
 
 5V connected to:
 
-Trimmer Potentiometer (leg2)
+    Trimmer Potentiometer (leg2)
 
-Adafruit PCA9685 PWM Servo Breakout (VCC)
+    Adafruit PCA9685 PWM Servo Breakout (VCC)
 
-Logic Level Converter (HV)
+    Logic Level Converter (HV)
 
-TB6612FNG Motor Driver (VCC)
+    TB6612FNG Motor Driver (VCC)
 
 GND connected to:
 
-Logic Level Converter (GND)
+    Logic Level Converter (GND)
 
-Motor N20 with Encoder (Blue:GND)
+    Motor N20 with Encoder (Blue:GND)
 
-TB6612FNG Motor Driver (GND)
+    TB6612FNG Motor Driver (GND)
 
-Adafruit PCA9685 PWM Servo Breakout (GND)
+    Adafruit PCA9685 PWM Servo Breakout (GND)
 
-Trimmer Potentiometer (leg1)
+    Trimmer Potentiometer (leg1)
 
-D9 connected to TB6612FNG Motor Driver (STBY)
+    D9 connected to TB6612FNG Motor Driver (STBY)
 
-D5 connected to TB6612FNG Motor Driver (PWMA)
+    D5 connected to TB6612FNG Motor Driver (PWMA)
 
-D4 connected to TB6612FNG Motor Driver (AI2)
+    D4 connected to TB6612FNG Motor Driver (AI2)
 
-D10 connected to TB6612FNG Motor Driver (AI1)
+    D10 connected to TB6612FNG Motor Driver (AI1)
 
-A0 connected to Trimmer Potentiometer (wiper)
+    A0 connected to Trimmer Potentiometer (wiper)
 
-A1 connected to Resistor (pin1 of 33k Ohms)
+    A1 connected to Resistor (pin1 of 33k Ohms)
 
 3.3V connected to:
 
-BNO055 (3vo)
+    BNO055 (3vo)
 
-Logic Level Converter (LV)
+    Logic Level Converter (LV)
 
-Motor N20 with Encoder (Black:VCC)
+    Motor N20 with Encoder (Black:VCC)
 
-D3 connected to Motor N20 with Encoder (Green:C1)
+    D3 connected to Motor N20 with Encoder (Green:C1)
 
-D2 connected to Motor N20 with Encoder (Yellow:C2)
+    D2 connected to Motor N20 with Encoder (Yellow:C2)
 
 A4 connected to:
 
-Adafruit PCA9685 PWM Servo Breakout (SDA)
+    Adafruit PCA9685 PWM Servo Breakout (SDA)
 
-Logic Level Converter (HV4)
+    Logic Level Converter (HV4)
 
 A5 connected to:
 
-Adafruit PCA9685 PWM Servo Breakout (SCL)
+    Adafruit PCA9685 PWM Servo Breakout (SCL)
 
-Logic Level Converter (HV2)
+    Logic Level Converter (HV2)
 
-Trimmer Potentiometer
+### Trimmer Potentiometer
 
 leg2 connected to Arduino UNO (5V)
 
@@ -127,23 +127,23 @@ wiper connected to Arduino UNO (A0)
 
 leg1 connected to:
 
-Adafruit PCA9685 PWM Servo Breakout (OE)
+    Adafruit PCA9685 PWM Servo Breakout (OE)
 
-Adafruit PCA9685 PWM Servo Breakout (GND)
+    Adafruit PCA9685 PWM Servo Breakout (GND)
 
-Resistor (pin2 of 100k Ohms)
+    Resistor (pin2 of 100k Ohms)
 
-Arduino UNO (GND)
+    Arduino UNO (GND)
 
-TB6612FNG Motor Driver
+### TB6612FNG Motor Driver
 
 VCC connected to Arduino UNO (5V)
 
 GND connected to:
 
-Arduino UNO (GND)
+    Arduino UNO (GND)
 
-USB C to 2 fils (-)
+    USB C to 2 fils (-)
 
 STBY connected to Arduino UNO (D9)
 
@@ -159,9 +159,9 @@ A01 connected to Motor N20 with Encoder (White:M1)
 
 VM connected to:
 
-USB C to 2 fils (+)
+    USB C to 2 fils (+)
 
-Resistor (pin1 of 100k Ohms)
+    Resistor (pin1 of 100k Ohms)
 
 ### Motor N20 with Encoder
 
