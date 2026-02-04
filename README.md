@@ -1,7 +1,14 @@
 # GyroVisor
 A gimbal suspended north pointing visor
 
+Circuit diagram
 <img width="3000" height="3934" alt="gyrovisor" src="https://github.com/user-attachments/assets/267ae83e-ee7e-4d76-96ea-76e28eb54790" />
+
+3D view
+
+
+<img width="370" height="381" alt="gimbal" src="https://github.com/user-attachments/assets/8aa9f2bc-c5b9-4270-953c-a2b915441136" />
+
 
 
 ## Circuit Documentation
