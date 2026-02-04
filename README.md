@@ -7,7 +7,7 @@ Circuit diagram
 3D view
 
 
-<img width="370" height="381" alt="gimbal" src="https://github.com/user-attachments/assets/8aa9f2bc-c5b9-4270-953c-a2b915441136" />
+<img width="481" height="495" alt="gimbal" src="https://github.com/user-attachments/assets/8aa9f2bc-c5b9-4270-953c-a2b915441136" />
 
 
 
