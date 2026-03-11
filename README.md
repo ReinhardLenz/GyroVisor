@@ -47,9 +47,14 @@ Properties: Resistance: 10,000 Ohms.
 Description: A motor driver used to control the motor's direction and speed.
 Pins: GND, B01, B02, A02, A01, VCC, VM, PWMB, BI2, BI1, STBY, AI1, AI2, PWMA.
 
+<img width="209" height="210" alt="TB6612FNG_picture" src="https://github.com/user-attachments/assets/1f35821a-2ae7-48b7-86bd-0179a3a10b7b" />
+
 ### Motor N20 with Encoder
 Description: A small DC motor with an integrated encoder for feedback.
 Pins: Red:M2, Black:VCC, Yellow:C2, Green:C1, Blue:GND, White:M1.
+
+<img width="726" height="201" alt="N20-motor" src="https://github.com/user-attachments/assets/238b897d-e499-4351-9ce7-15d6c06e4662" />
+
 
 ### USB C to 2 fils
 Description: A power supply interface.
@@ -70,6 +75,11 @@ Pins: HV1, HV2, HV, GND, HV3, HV4, LV1, LV2, LV, LV3, LV4.
 Description: An intelligent 9-axis absolute orientation sensor.
 Pins: Vin, 3vo, GND, SDA, SCL, RST.
 
+<img width="328" height="433" alt="BNO055_picture" src="https://github.com/user-attachments/assets/da19a43a-91b5-44ef-9ab6-82c22055d9f2" />
+
+<img width="770" height="360" alt="BNO055-pinout" src="https://github.com/user-attachments/assets/3621b246-3d60-414e-83d5-66aa5ae3098c" />
+
+
 ### Micro Servo 9G
 Description: A small servo motor for precise control.
 Pins: GND, +5V, PWM.
@@ -77,6 +87,8 @@ Pins: GND, +5V, PWM.
 ### Adafruit PCA9685 PWM Servo Breakout
 Description: A PWM driver board for controlling servos.
 Pins: 5.0V, GND, PWRIN, PWM7, PWM6, PWM5, PWM4, PWM3, PWM2, PWM1, PWM0, VCC, SDA, SCL, OE, PWM15, PWM14, PWM13, PWM12, PWM11, PWM10, PWM9, PWM8.
+
+<img width="718" height="414" alt="PCA9685-picture_with_explanations" src="https://github.com/user-attachments/assets/215f01b7-36d2-429c-8f6a-11c99bd26670" />
 
 
 ## Wiring Details
