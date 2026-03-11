@@ -21,6 +21,10 @@ http://raikkulenz.kapsi.fi/downloadfolder_not_protected/kokonaiskuva.pdf
 <img width="481" height="495" alt="gimbal" src="https://github.com/user-attachments/assets/8aa9f2bc-c5b9-4270-953c-a2b915441136" />
 
 
+# Photo
+
+![N20-motor-TB6612FNG_bridge_photo](https://github.com/user-attachments/assets/3dac5248-ad4f-407c-a7a6-ff1216dc90db)
+
 
 ## Circuit Documentation
 
