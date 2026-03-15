@@ -132,7 +132,7 @@ void loop() {
     roll=compass.getRoll();
     Serial.print("roll:");
     Serial.print(roll);
-    setServoAngle0(90-roll);
+    setServoAngle0(90+roll);
     
     pitch=compass.getPitch();
     Serial.print("pitch:");
