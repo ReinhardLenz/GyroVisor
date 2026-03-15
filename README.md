@@ -26,6 +26,10 @@ http://raikkulenz.kapsi.fi/downloadfolder_not_protected/kokonaiskuva.pdf
 ![N20-motor-TB6612FNG_bridge_photo](https://github.com/user-attachments/assets/3dac5248-ad4f-407c-a7a6-ff1216dc90db)
 
 
+# demo video link
+
+https://www.youtube.com/shorts/kvSa0N7uzfM
+
 ## Circuit Documentation
 
 Summary
