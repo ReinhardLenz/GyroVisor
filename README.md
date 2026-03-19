@@ -28,9 +28,8 @@ http://raikkulenz.kapsi.fi/downloadfolder_not_protected/kokonaiskuva.pdf
 
 # demo video link
 
-https://www.youtube.com/shorts/kvSa0N7uzfM
-
-<iframe width="560" height="315" src="https://www.youtube.com/shorts/kvSa0N7uzfM" frameborder="0" allow="accelerometer;autoplay;encrypted-media; gyroscope; picture-in-picture" allowfullscreen> #document (https://www.youtube.com/shorts/kvSa0N7uzfM)</iframe>
+[![Watch the video](https://img.youtube.com/vi/kvSa0N7uzfM/0.jpg)]
+(https://www.youtube.com/watch?v=kvSa0N7uzfM)
 
 ## Circuit Documentation
 
