@@ -39,8 +39,9 @@ This circuit is designed to control a motor using an Arduino UNO, a TB6612FNG mo
 
 ## Component List
 
-# shopping basket
+### shopping basket
 
+In the linktree shopping basket, there are links pointing to the right components.
 https://linktr.ee/gyrovisor
 
 
@@ -67,7 +68,8 @@ Pins: Red:M2, Black:VCC, Yellow:C2, Green:C1, Blue:GND, White:M1.
 
 
 ### USB C to 2 fils
-Description: A power supply interface.
+Description: A power supply interface. Any USB cable will do, one end connected to a standard phone charger, and at the other  side, you have to strip the cable sheath. Red wire: This wire is usually the power wire and carries +5V. Black wire: This wire is generally used for ground (GND).
+[Other colors (such as green and white): These wires are used for data transmission (D+ and D-). these wires can be cut off completely and are not used in this project]
 Pins: USB C, +, -.
 Resistor (100k Ohms)
 Description: A fixed resistor used in the voltage divider.
