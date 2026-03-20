@@ -39,6 +39,11 @@ This circuit is designed to control a motor using an Arduino UNO, a TB6612FNG mo
 
 ## Component List
 
+# shopping basket
+
+https://linktr.ee/gyrovisor
+
+
 ### Arduino UNO
 Description: A microcontroller board based on the ATmega328P.
 Pins: UNUSED, IOREF, Reset, 3.3V, 5V, GND, Vin, A0, A1, A2, A3, A4, A5, SCL, SDA, AREF, D13, D12, D11, D10, D9, D8, D7, D6, D5, D4, D3, D2, D1, D0.
