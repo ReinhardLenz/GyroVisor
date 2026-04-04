@@ -2,7 +2,8 @@
 A gimbal suspended north pointing visor.  It is a cardanic suspension build on a base plate, with two "rings" an outer ring, which is rotating around an axis , suspended on two bearings on the the perimeter of the ring at 180 degree. The rotation angle is controlled by an servo motor on one of the two bearings. Then in the inside of this ring there is another ring, which is also rotating, but the rotating axis is at 90 degree to the rotation axis of the outer ring. Also here the rotation angle is controlled by an servo motor on one of the two bearings. Then, in the inside of this inner ring is a motor, which can rotate freely, and it is has an encoder. On this motor axle, an round platform with an arrow (or a camera) is mounted. There is a electronic circuit, which is fixed on the base plate. So, when the base platform is mounted on a irregularly moving vehicle, gondola, vessel or airplane, the circuit is designed to control the two servo motors and the motor with encoder so that the arrow always stays horizontally, and the arrow (or camera) on the platform always points to the same direction, always compensating the movements of the airplane. This is commonly known as a "gimbal".
 
 Circuit diagram
-<img width="3000" height="3934" alt="gyrovisor" src="https://github.com/user-attachments/assets/267ae83e-ee7e-4d76-96ea-76e28eb54790" />
+<img width="2924" height="3459" alt="circuit_image" src="https://github.com/user-attachments/assets/7d61bd40-0775-4eac-85df-3004be9a0a3a" />
+
 
 # Stl parts:
 
@@ -23,7 +24,7 @@ http://raikkulenz.kapsi.fi/downloadfolder_not_protected/kokonaiskuva.pdf
 
 # Photo
 
-![N20-motor-TB6612FNG_bridge_photo](https://github.com/user-attachments/assets/3dac5248-ad4f-407c-a7a6-ff1216dc90db)
+![photo_BNO085_gyrovisor](https://github.com/user-attachments/assets/4bdfa9e9-6c2b-40f2-9a14-a70920be1cfe)
 
 
 # demo video link
@@ -31,265 +32,143 @@ http://raikkulenz.kapsi.fi/downloadfolder_not_protected/kokonaiskuva.pdf
 [![Watch the video](https://img.youtube.com/vi/kvSa0N7uzfM/0.jpg)]
 (https://www.youtube.com/watch?v=kvSa0N7uzfM)
 
-## Circuit Documentation
+# **Circuit Documentation**
 
-Summary
+## **Summary**
 
 This circuit is designed to control a motor using an Arduino UNO, a TB6612FNG motor driver, and a motor with an encoder. The circuit also includes a potentiometer for input, a logic level converter, a BNO055 sensor, and a PWM servo breakout board to control servos. The Arduino UNO reads the potentiometer and encoder values to control the motor's position using a proportional control algorithm. The circuit is powered via a USB C connection.
 
-## Component List
+## **Component List**
 
-### shopping basket
+1. **Trimmer Potentiometer**  
+   * **Description**: A variable resistor used to adjust voltage levels.  
+   * **Properties**: Resistance of 10,000 Ohms.  
+2. **TB6612FNG Motor Driver**  
+   * **Description**: A dual motor driver used to control the direction and speed of motors.  
+3. **Motor N20 with Encoder**  
+   * **Description**: A small DC motor with an integrated encoder for feedback on motor position and speed.  
+4. **USB C to 2 Wires**  
+   * **Description**: Provides power to the circuit from a USB C source.  
+5. **Resistor (100k Ohms)**  
+   * **Description**: A passive component used to limit current flow.  
+6. **Resistor (33k Ohms)**  
+   * **Description**: Another passive component used to limit current flow.  
+7. **Logic Level Converter**  
+   * **Description**: Converts voltage levels between different components to ensure compatibility.  
+8. **Micro Servo 9G (2 units)**  
+   * **Description**: Small servos used for precise control of mechanical movements.  
+9. **Arduino Due**  
+   * **Description**: A microcontroller board based on the Atmel SAM3X8E ARM Cortex-M3 CPU.  
+10. **BNO085**  
+    * **Description**: A sensor module used for orientation and motion tracking.
+
+## **Wiring Details**
+
+### **Trimmer Potentiometer**
+
+* **leg1**: Connected to GND (common ground with servos and Arduino Due).  
+* **wiper**: Connected to A0 on the Arduino Due.  
+* **leg2**: Connected to \+5V (common power with servos, logic level converter, and motor driver).
 
-In the linktree shopping basket, there are links pointing to the right components.
-https://linktr.ee/gyrovisor
+### ---
 
+**TB6612FNG Motor Driver**
 
-### Arduino UNO
-Description: A microcontroller board based on the ATmega328P.
-Pins: UNUSED, IOREF, Reset, 3.3V, 5V, GND, Vin, A0, A1, A2, A3, A4, A5, SCL, SDA, AREF, D13, D12, D11, D10, D9, D8, D7, D6, D5, D4, D3, D2, D1, D0.
+* **GND**: Connected to common ground with Arduino Due and motor.  
+* **VCC**: Connected to \+5V (common power).  
+* **VM**: Connected to the positive wire from USB C and pin1 of a 100k Ohm resistor.  
+* **STBY**: Connected to D9 PWM on the Arduino Due.  
+* **PWMA**: Connected to D5 PWM on the Arduino Due.  
+* **AI1**: Connected to D10 PWM/SS0 on the Arduino Due.  
+* **AI2**: Connected to D4 PWM/SS1 on the Arduino Due.  
+* **A01**: Connected to the White:M1 pin of the motor.  
+* **A02**: Connected to the Red:M2 pin of the motor.
 
-### Trimmer Potentiometer
-Description: A variable resistor used to adjust the input voltage.
-Pins: leg1, wiper, leg2.
-Properties: Resistance: 10,000 Ohms.
+### ---
 
-### TB6612FNG Motor Driver
-Description: A motor driver used to control the motor's direction and speed.
-Pins: GND, B01, B02, A02, A01, VCC, VM, PWMB, BI2, BI1, STBY, AI1, AI2, PWMA.
+**Motor N20 with Encoder**
 
-<img width="209" height="210" alt="TB6612FNG_picture" src="https://github.com/user-attachments/assets/1f35821a-2ae7-48b7-86bd-0179a3a10b7b" />
+* **Red:M2**: Connected to A02 on the motor driver.  
+* **White:M1**: Connected to A01 on the motor driver.  
+* **Black:VCC**: Connected to LV on the logic level converter and IOREF on the Arduino Due.  
+* **Blue:GND**: Connected to common ground.  
+* **Green:C1**: Connected to D3 PWM on the Arduino Due.  
+* **Yellow:C2**: Connected to D2 PWM on the Arduino Due.
 
-### Motor N20 with Encoder
-Description: A small DC motor with an integrated encoder for feedback.
-Pins: Red:M2, Black:VCC, Yellow:C2, Green:C1, Blue:GND, White:M1.
+### ---
 
-<img width="726" height="201" alt="N20-motor" src="https://github.com/user-attachments/assets/238b897d-e499-4351-9ce7-15d6c06e4662" />
+**USB C to 2 Wires**
 
+* **\+**: Connected to VM on the motor driver and pin1 of a 100k Ohm resistor.  
+* **\-**: Connected to GND on the motor driver.
 
-### USB C to 2 fils
-Description: A power supply interface. Any USB cable will do, one end connected to a standard phone charger, and at the other  side, you have to strip the cable sheath. Red wire: This wire is usually the power wire and carries +5V. Black wire: This wire is generally used for ground (GND).
-[Other colors (such as green and white): These wires are used for data transmission (D+ and D-). these wires can be cut off completely and are not used in this project]
-Pins: USB C, +, -.
-Resistor (100k Ohms)
-Description: A fixed resistor used in the voltage divider.
-Pins: pin1, pin2.
+### ---
 
-### Resistor (33k Ohms)
-Description: A fixed resistor used in the voltage divider.
-Pins: pin1, pin2.
+**Resistor (100k Ohms)**
 
-Logic Level Converter
-Description: Converts voltage levels between different components.
-Pins: HV1, HV2, HV, GND, HV3, HV4, LV1, LV2, LV, LV3, LV4.
+* **pin1**: Connected to VM on the motor driver and \+ wire from USB C.  
+* **pin2**: Connected to pin1 of a 33k Ohm resistor.
 
-### BNO055
-Description: An intelligent 9-axis absolute orientation sensor.
-Pins: Vin, 3vo, GND, SDA, SCL, RST.
+### ---
 
-<img width="328" height="433" alt="BNO055_picture" src="https://github.com/user-attachments/assets/da19a43a-91b5-44ef-9ab6-82c22055d9f2" />
+**Resistor (33k Ohms)**
 
-<img width="770" height="360" alt="BNO055-pinout" src="https://github.com/user-attachments/assets/3621b246-3d60-414e-83d5-66aa5ae3098c" />
+* **pin1**: Connected to pin2 of a 100k Ohm resistor.  
+* **pin2**: Connected to leg1 of the trimmer potentiometer and common ground.
 
+### ---
 
-### Micro Servo 9G
-Description: A small servo motor for precise control.
-Pins: GND, +5V, PWM.
+**Logic Level Converter**
 
-### Adafruit PCA9685 PWM Servo Breakout
-Description: A PWM driver board for controlling servos.
-Pins: 5.0V, GND, PWRIN, PWM7, PWM6, PWM5, PWM4, PWM3, PWM2, PWM1, PWM0, VCC, SDA, SCL, OE, PWM15, PWM14, PWM13, PWM12, PWM11, PWM10, PWM9, PWM8.
+* **HV**: Connected to \+5V (common power).  
+* **GND**: Connected to common ground.  
+* **LV**: Connected to VCC of BNO085 and Black:VCC of the motor.  
+* **HV4**: Connected to A4 on the Arduino Due.  
+* **HV2**: Connected to A5 on the Arduino Due.  
+* **LV2**: Connected to SCL/SCK/RX of BNO085.  
+* **LV4**: Connected to SDA/MISO/TX of BNO085.
 
-<img width="718" height="414" alt="PCA9685-picture_with_explanations" src="https://github.com/user-attachments/assets/215f01b7-36d2-429c-8f6a-11c99bd26670" />
+### ---
 
+**Micro Servo 9G**
 
-## Wiring Details
+* **GND**: Connected to common ground.  
+* **\+5V**: Connected to \+5V (common power).  
+* **PWM**:  
+  * First servo connected to A8 on the Arduino Due.  
+  * Second servo connected to A9 on the Arduino Due.
 
-### Arduino UNO
-
-5V connected to:
-
-    Trimmer Potentiometer (leg2)
-
-    Adafruit PCA9685 PWM Servo Breakout (VCC)
-
-    Logic Level Converter (HV)
-
-    TB6612FNG Motor Driver (VCC)
-
-GND connected to:
-
-    Logic Level Converter (GND)
-
-    Motor N20 with Encoder (Blue:GND)
-
-    TB6612FNG Motor Driver (GND)
-
-    Adafruit PCA9685 PWM Servo Breakout (GND)
-
-    Trimmer Potentiometer (leg1)
-
-    D9 connected to TB6612FNG Motor Driver (STBY)
-
-    D5 connected to TB6612FNG Motor Driver (PWMA)
-
-    D4 connected to TB6612FNG Motor Driver (AI2)
-
-    D10 connected to TB6612FNG Motor Driver (AI1)
-
-    A0 connected to Trimmer Potentiometer (wiper)
-
-    A1 connected to Resistor (pin1 of 33k Ohms)
-
-3.3V connected to:
-
-    BNO055 (3vo)
-
-    Logic Level Converter (LV)
-
-    Motor N20 with Encoder (Black:VCC)
-
-    D3 connected to Motor N20 with Encoder (Green:C1)
-
-    D2 connected to Motor N20 with Encoder (Yellow:C2)
-
-A4 connected to:
-
-    Adafruit PCA9685 PWM Servo Breakout (SDA)
-
-    Logic Level Converter (HV4)
-
-A5 connected to:
-
-    Adafruit PCA9685 PWM Servo Breakout (SCL)
-
-    Logic Level Converter (HV2)
-
-### Trimmer Potentiometer
-
-leg2 connected to Arduino UNO (5V)
-
-wiper connected to Arduino UNO (A0)
-
-leg1 connected to:
-
-    Adafruit PCA9685 PWM Servo Breakout (OE)
-
-    Adafruit PCA9685 PWM Servo Breakout (GND)
-
-    Resistor (pin2 of 100k Ohms)
-
-    Arduino UNO (GND)
-
-### TB6612FNG Motor Driver
-
-VCC connected to Arduino UNO (5V)
-
-GND connected to:
-
-    Arduino UNO (GND)
-
-    USB C to 2 fils (-)
-
-STBY connected to Arduino UNO (D9)
-
-PWMA connected to Arduino UNO (D5)
-
-AI2 connected to Arduino UNO (D4)
-
-AI1 connected to Arduino UNO (D10)
-
-A02 connected to Motor N20 with Encoder (Red:M2)
-
-A01 connected to Motor N20 with Encoder (White:M1)
-
-VM connected to:
-
-    USB C to 2 fils (+)
-
-    Resistor (pin1 of 100k Ohms)
-
-### Motor N20 with Encoder
-
-Red:M2 connected to TB6612FNG Motor Driver (A02)
-
-White:M1 connected to TB6612FNG Motor Driver (A01)
-
-Blue:GND connected to Arduino UNO (GND)
-
-Black:VCC connected to Arduino UNO (3.3V)
-
-Green:C1 connected to Arduino UNO (D3)
-
-Yellow:C2 connected to Arduino UNO (D2)
-
-### USB C to 2 fils
-
-- connected to TB6612FNG Motor Driver (GND)
-
-+ connected to TB6612FNG Motor Driver (VM)
-
-### Resistor (100k Ohms)
-
-pin1 connected to TB6612FNG Motor Driver (VM)
-
-pin2 connected to Trimmer Potentiometer (leg1)
-
-### Resistor (33k Ohms)
-
-pin1 connected to Arduino UNO (A1)
-
-pin2 connected to Resistor (pin1 of 100k Ohms)
-
-### Logic Level Converter
-
-HV connected to Arduino UNO (5V)
-
-GND connected to Arduino UNO (GND)
-
-LV connected to Arduino UNO (3.3V)
-
-HV4 connected to Arduino UNO (A4)
-
-HV2 connected to Arduino UNO (A5)
-
-LV2 connected to BNO055 (SCL)
-
-LV4 connected to BNO055 (SDA)
-
-### BNO055
-
-3vo connected to Arduino UNO (3.3V)
-
-GND connected to Logic Level Converter (GND)
-
-SDA connected to Logic Level Converter (LV4)
-
-SCL connected to Logic Level Converter (LV2)
-
-### Micro Servo 9G
-
-GND connected to Adafruit PCA9685 PWM Servo Breakout (PWM0)
-
-+5V connected to Adafruit PCA9685 PWM Servo Breakout (5.0V)
-
-PWM connected to Adafruit PCA9685 PWM Servo Breakout (GND)
-
-### Adafruit PCA9685 PWM Servo Breakout
-
-VCC connected to Arduino UNO (5V)
-
-GND connected to Arduino UNO (GND)
-
-SDA connected to Arduino UNO (A4)
-
-SCL connected to Arduino UNO (A5)
-
-OE connected to Trimmer Potentiometer (leg1)
-
-PWM0 connected to Micro Servo 9G (GND)
-
-5.0V connected to Micro Servo 9G (+5V)
-
+### ---
+
+**Arduino Due**
+
+* **5V**: Connected to \+5V (common power).  
+* **GND**: Connected to common ground.  
+* **IOREF**: Connected to LV on the logic level converter.  
+* **A0**: Connected to the wiper of the trimmer potentiometer.  
+* **A1**: Connected to pin1 of a 33k Ohm resistor.  
+* **A4**: Connected to HV4 on the logic level converter.  
+* **A5**: Connected to HV2 on the logic level converter.  
+* **D9 PWM**: Connected to STBY on the motor driver.  
+* **D5 PWM**: Connected to PWMA on the motor driver.  
+* **D4 PWM/SS1**: Connected to AI2 on the motor driver.  
+* **D10 PWM/SS0**: Connected to AI1 on the motor driver.  
+* **D3 PWM**: Connected to Green:C1 of the motor.  
+* **D2 PWM**: Connected to Yellow:C2 of the motor.  
+* **A8**: Connected to PWM of the first micro servo.  
+* **A9**: Connected to PWM of the second micro servo.
+
+### ---
+
+**BNO085**
+
+* **VCC**: Connected to LV on the logic level converter.  
+* **GND**: Connected to GND on the logic level converter.  
+* **SCL/SCK/RX**: Connected to LV2 on the logic level converter.  
+* **SDA/MISO/TX**: Connected to LV4 on the logic level converter.
+
+## **Code Documentation**
+
+There is no code provided for this circuit. The Arduino Due is expected to be programmed to control the motor driver, read encoder feedback, and manage the servos and sensor data. The logic level converter ensures proper voltage levels between the Arduino and the BNO085 sensor.
 
 ![Visitor Count](https://komarev.com/ghpvc/?username=ReinhardLenz&repo=GyroVisor&color=green)
