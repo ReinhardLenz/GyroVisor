@@ -170,6 +170,6 @@ This circuit is designed to control a motor using an Arduino UNO, a TB6612FNG mo
 
 ## **Code Documentation**
 
-There is no code provided for this circuit. The Arduino Due is expected to be programmed to control the motor driver, read encoder feedback, and manage the servos and sensor data. The logic level converter ensures proper voltage levels between the Arduino and the BNO085 sensor.
+The Arduino Due is programmed to control the motor driver, read encoder feedback, and manage the servos and sensor data. The logic level converter ensures proper voltage levels between the Arduino and the BNO085 sensor. 
 
 ![Visitor Count](https://komarev.com/ghpvc/?username=ReinhardLenz&repo=GyroVisor&color=green)
