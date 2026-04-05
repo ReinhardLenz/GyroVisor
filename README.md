@@ -29,8 +29,9 @@ http://raikkulenz.kapsi.fi/downloadfolder_not_protected/kokonaiskuva.pdf
 
 # demo video link
 
-[![Watch the video](https://img.youtube.com/vi/kvSa0N7uzfM/0.jpg)]
-(https://www.youtube.com/watch?v=kvSa0N7uzfM)
+[![Demo video](https://img.youtube.com/vi/y0DqdKf1gtM/0.jpg)](https://www.youtube.com/watch?v=y0DqdKf1gtM)
+
+
 
 # **Circuit Documentation**
 
