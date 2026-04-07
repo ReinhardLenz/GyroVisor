@@ -59,6 +59,12 @@ const long SCALE_DEG_TO_ENC = 33L;
 // ~12 counts per pot unit = ~12000 counts full-scale for 1023 pot units.
 // 12000 counts / 360° ≈ 33 counts per degree.
 
+// Servo smoothing
+float filtRoll = 0;
+float filtPitch = 0;
+const float alpha = 0.1;   // smoothing factor (0–1)
+
+
 // --------------------- Compass ---------------------
 float heading = 0.0;
 float roll = 0.0;
@@ -72,12 +78,25 @@ float continuousHeading = 0.0;
 
 Servo servo_pitch;
 Servo servo_roll;
+
+
 // --------------------- Helper Functions ---------------------
 float readVmVoltage() {
   int raw = analogRead(VM_SENSE);
   float vin = raw * (5.0 / 1023.0);
   return vin * VM_DIVIDER;
 }
+
+float adaptiveFilter(float prev, float current, float threshold, float alphaLow, float alphaHigh) {
+    float diff = fabs(current - prev);
+
+    if (diff < threshold) {
+        return prev * (1 - alphaLow) + current * alphaLow;   // smooth small changes
+    } else {
+        return prev * (1 - alphaHigh) + current * alphaHigh; // fast response for large changes
+    }
+}
+
 // --------------------- Setup ---------------------
 void setup() {
   // Motor control pins
@@ -87,8 +106,8 @@ void setup() {
   pinMode(stby, OUTPUT);
   digitalWrite(stby, LOW);
   //Servo initialization
-  servo_pitch.attach(7);
-  servo_roll.attach(6);
+  servo_pitch.attach(A6);
+  servo_roll.attach(A7);
   delay(5000);  // give bootloader time to enumerate
   Serial.begin(9600);
   unsigned long t0 = millis();
@@ -157,7 +176,13 @@ if (vm > VM_THRESHOLD) {
   targetEnc = (long)(continuousHeading * SCALE_DEG_TO_ENC); // also targetEnc can grow beyond 11880 or lelow -11880
   // --- Read encoder ---
   currentEnc = -enc.read();
+/*
+  Serial.print("currentEnc: ");
+  Serial.print(currentEnc);
+  Serial.print("  targetEnc: ");
+  Serial.print(targetEnc);
 
+*/
   // --- Compute control error ---
 //  error = targetEnc - currentEnc;
   error = currentEnc - targetEnc;
@@ -174,12 +199,10 @@ if (vm > VM_THRESHOLD) {
     digitalWrite(in1A, HIGH);
     digitalWrite(in2A, LOW);
     analogWrite(pwmA, pwm);
-
   } else {
     digitalWrite(in1A, LOW);
     digitalWrite(in2A, HIGH);
     analogWrite(pwmA, pwm);
-
   }
 
   } else {
@@ -188,13 +211,12 @@ if (vm > VM_THRESHOLD) {
     analogWrite(pwmA, 0);
   //    Serial.println("VM missing, driver disabled.");
 }
-
 roll = compass.getRoll();
 servo_roll.write(90-roll);  
 
 pitch = compass.getPitch();
 servo_pitch.write(90+pitch);
 
-delay(50);
+
 lastHeading = heading;
 }

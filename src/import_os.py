@@ -2,7 +2,7 @@
 
 import os
 
-folder_path = 'c:/temp/platformio/Gyrovisor_BNO085_2/src/'
+folder_path = 'c:/temp/platformio/Gyrovisor_BNO085_3/GyroVisor/src'
 
 
 output_file = 'total_program.txt'

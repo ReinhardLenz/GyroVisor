@@ -71,12 +71,12 @@ float Compass::getHeading(int degree_shift) {
         // leave ypr_1 unchanged
         break;
     }
-/*
+
     Serial.print("X: "); Serial.print(ypr_1.yaw);
     Serial.print(" \tY: "); Serial.print(ypr_1.pitch);
     Serial.print(" \tZ: "); Serial.print(ypr_1.roll);
     Serial.println("");
-*/
+
 
 update_sensor_1 = false;
   }
