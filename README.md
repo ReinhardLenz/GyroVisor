@@ -43,32 +43,6 @@ https://linktr.ee/Gyrovisor_gimbal
 This circuit is designed to control a motor using an Arduino UNO, a TB6612FNG motor driver, and a motor with an encoder. The circuit also includes a potentiometer for input, a logic level converter, a BNO055 sensor, and a PWM servo breakout board to control servos. The Arduino UNO reads the potentiometer and encoder values to control the motor's position using a proportional control algorithm. The circuit is powered via a USB C connection.
 
 ## **Component List**
-<<<<<<< HEAD
-
-1. **Trimmer Potentiometer**  
-   * **Description**: A variable resistor used to adjust voltage levels.  
-   * **Properties**: Resistance of 10,000 Ohms.  
-2. **TB6612FNG Motor Driver**  
-   * **Description**: A dual motor driver used to control the direction and speed of motors.  
-3. **Motor N20 with Encoder**  
-   * **Description**: A small DC motor with an integrated encoder for feedback on motor position and speed.  
-4. **USB C to 2 Wires**  
-   * **Description**: Provides power to the circuit from a USB C source.  
-5. **Resistor (100k Ohms)**  
-   * **Description**: A passive component used to limit current flow.  
-6. **Resistor (33k Ohms)**  
-   * **Description**: Another passive component used to limit current flow.  
-7. **Logic Level Converter**  
-   * **Description**: Converts voltage levels between different components to ensure compatibility.  
-8. **Micro Servo 9G (2 units)**  
-   * **Description**: Small servos used for precise control of mechanical movements.  
-9. **Arduino Due**  
-   * **Description**: A microcontroller board based on the Atmel SAM3X8E ARM Cortex-M3 CPU.  
-10. **BNO085**  
-    * **Description**: A sensor module used for orientation and motion tracking.
-
-## **Wiring Details**
-=======
 
 1. **TB6612FNG Motor Driver**  
    * Description: Motor driver for controlling DC motors.  
@@ -181,6 +155,8 @@ This circuit is designed to control a motor using an Arduino UNO, a TB6612FNG mo
 
 * **Electrolytic Capacitor (0.1 µF)**: Positive pins connected to Arduino Due 5V and other components; negative pins connected to Arduino Due GND and other components.  
 * **Ceramic Capacitor (0.1 µF)**: pin0 connected to Arduino Due 5V and other components; pin1 connected to Arduino Due GND and other components.
+
+
 
 
 ## **Code Documentation**
