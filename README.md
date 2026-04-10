@@ -40,7 +40,7 @@ https://linktr.ee/Gyrovisor_gimbal
 
 ## **Summary**
 
-This circuit is designed to control a motor using an Arduino UNO, a TB6612FNG motor driver, and a motor with an encoder. The circuit also includes a potentiometer for input, a logic level converter, a BNO055 sensor, and a PWM servo breakout board to control servos. The Arduino UNO reads the potentiometer and encoder values to control the motor's position using a proportional control algorithm. The circuit is powered via a USB C connection.
+This circuit is designed to control a motor using an Arduino UNO, a TB6612FNG motor driver, and a motor with an encoder. The circuit also includes a logic level converter, a BNO055 sensor, and a PWM servo breakout board to control servos. The Arduino UNO reads the encoder values to control the motor's position using a proportional control algorithm. The circuit is powered via a USB C connection.
 
 ## **Component List**
 
@@ -156,6 +156,10 @@ This circuit is designed to control a motor using an Arduino UNO, a TB6612FNG mo
 * **Electrolytic Capacitor (0.1 µF)**: Positive pins connected to Arduino Due 5V and other components; negative pins connected to Arduino Due GND and other components.  
 * **Ceramic Capacitor (0.1 µF)**: pin0 connected to Arduino Due 5V and other components; pin1 connected to Arduino Due GND and other components.
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5b4c853 (PID control , error time diagram)
 ## **Code Documentation**
 
 The Arduino Due is programmed to control the motor driver, read encoder feedback, and manage the servos and sensor data. The logic level converter ensures proper voltage levels between the Arduino and the BNO085 sensor. The code integrates motor positioning, servo actuation, and orientation sensing into a single real‑time control loop.
@@ -168,10 +172,11 @@ The BNO085 IMU is polled for new orientation data; when new sensor events arrive
   sparkfun/SparkFun BNO08x Cortex Based IMU@^1.0.6
   arduino-libraries/Servo@^1.3.0
 	paulstoffregen/Encoder@^1.4.4
-
-
-
+<<<<<<< HEAD
 =======
->>>>>>> c3f5995 (changed pins)
+
+>>>>>>> 5b4c853 (PID control , error time diagram)
+
+
 
 ![Visitor Count](https://komarev.com/ghpvc/?username=ReinhardLenz&repo=GyroVisor&color=green)

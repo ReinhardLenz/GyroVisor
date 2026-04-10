@@ -36,6 +36,8 @@ float lastSerialHeading = 0.0f;
 Compass compass;
 BNO08x imu;
 
+#define DBG_PRINTLN(x) do { if (Serial) Serial.println(x); } while(0)
+#define DBG_PRINT(x)   do { if (Serial) Serial.print(x); } while(0)
 
 
 // --------------------- TB6612 Motor Driver ---------------------
@@ -54,7 +56,7 @@ Encoder enc(2, 3);
 
 // --------------------- Control Parameters ---------------------
 const float Kp = 0.05;     // proportional gain
-const int DEADZONE = 12;   // encoder counts tolerance
+const int DEADZONE = 600;   // encoder counts tolerance
 const long SCALE_DEG_TO_ENC = 33L;  
 // ~12 counts per pot unit = ~12000 counts full-scale for 1023 pot units.
 // 12000 counts / 360° ≈ 33 counts per degree.
@@ -72,14 +74,37 @@ float continuousHeading = 0.0;
 
 Servo servo_pitch;
 Servo servo_roll;
+
+//PID control  variables
+float Ki = 0.0002;
+float Kd = 0.01;
+
+// PID state variables
+float integral = 0;
+float lastError = 0;
+unsigned long lastTime = 0;
+
+
 // --------------------- Helper Functions ---------------------
 float readVmVoltage() {
   int raw = analogRead(VM_SENSE);
   float vin = raw * (5.0 / 1023.0);
   return vin * VM_DIVIDER;
 }
+// Simple function to blink the built-in LED n times (for error indication)
+void blinkCode(int n) {
+  for (int i = 0; i < n; i++) {
+    digitalWrite(LED_BUILTIN, HIGH); delay(150);
+    digitalWrite(LED_BUILTIN, LOW);  delay(150);
+  }
+  delay(600);
+}
+
+
 // --------------------- Setup ---------------------
 void setup() {
+
+  pinMode(LED_BUILTIN, OUTPUT);
   // Motor control pins
   pinMode(pwmA, OUTPUT);
   pinMode(in1A, OUTPUT);
@@ -89,8 +114,12 @@ void setup() {
   //Servo initialization
   servo_pitch.attach(7);
   servo_roll.attach(6);
-  delay(5000);  // give bootloader time to enumerate
+  delay(2000);  // give bootloader time to enumerate
+  blinkCode(1);  // reached setup start
   Serial.begin(9600);
+  blinkCode(2);  // reached setup start
+/*
+
   unsigned long t0 = millis();
   bool serialReady = false;
 
@@ -101,32 +130,46 @@ void setup() {
     }
     delay(10);
   }
+
+
   if (serialReady) {
     Serial.println("Serial monitor connected!");
     digitalWrite(LED_BUILTIN, HIGH);    // optional indicator
   } else {
     // Serial monitor not connected, continue anyway
   }
+*/
   Wire.begin();
+  blinkCode(3);  // reached setup start
+
   Wire.setClock(10000);
   delay(300);   // IMPORTANT: let BNO085 boot 
   // Initialize IMU
-  if (!imu.begin())
-  {
-    Serial.println("BNO08x not detected!");
-    while (1);
-    Serial.println("BNO08x ready");
+
+// Start communication with BNO085
+
+  int retries = 0;
+  while (!imu.begin() && retries < 10) {
+    blinkCode(9); // IMU begin retry marker
+    delay(500);
+    retries++;
   }
+  blinkCode(4);  // after imu.begin loop
+
   if (!imu.enableGameRotationVector(50)) {
-    Serial.println("❌ enableGameRotationVector failed");
+    blinkCode(7); // enable report failed
   } else {
-    Serial.println("✅ GameRotationVector enabled");
+    blinkCode(5); // enabled ok
   }
-  delay(1000);
-}
+    delay(1000);
+  }
 
 // --------------------- Main Loop ---------------------
 void loop() {
+static bool t = false;
+t = !t;
+digitalWrite(LED_BUILTIN, t);
+
 float vm = readVmVoltage();
 if (vm > VM_THRESHOLD) {
   digitalWrite(stby, HIGH); // enable motor driver
@@ -155,22 +198,53 @@ if (vm > VM_THRESHOLD) {
   continuousHeading += delta; //continuousHeading can grow beyond 0–360° (e.g. −720°, +1440°, etc.) It represents how much total rotation has occurred.
   // --- Convert continuous heading → target encoder counts ---
   targetEnc = (long)(continuousHeading * SCALE_DEG_TO_ENC); // also targetEnc can grow beyond 11880 or lelow -11880
-  // --- Read encoder ---
+
   currentEnc = -enc.read();
 
   // --- Compute control error ---
-//  error = targetEnc - currentEnc;
+  //  error = targetEnc - currentEnc;
   error = currentEnc - targetEnc;
+  DBG_PRINT("Error: "); 
+  DBG_PRINTLN(error);  // --- Read encoder ---
+
   long absErr = abs(error);
   // --- Compute PWM (proportional control) ---
-  int pwm = (int)(Kp * absErr);
+
+
+ //PID control
+  // --- Time step ---
+  unsigned long now = millis();
+  float dt = (now - lastTime) / 1000.0;  // seconds
+  lastTime = now;
+
+  // Avoid division by zero
+  if (dt <= 0) dt = 0.001;
+
+  // --- PID terms ---
+  float P = error;
+  integral += error * dt;
+
+  // Anti-windup (important!)
+  if (integral > 10000) integral = 10000;
+  if (integral < -10000) integral = -10000;
+
+  float derivative = (error - lastError) / dt;
+  lastError = error;
+
+  // --- PID output ---
+  float output = Kp * P + Ki * integral + Kd * derivative;
+
+  // Convert to PWM
+  int pwm = abs((int)output);
+
+
   if (pwm > 255) pwm = 255;
   // --- Control motor direction ---
   if (absErr <= DEADZONE) {  //if it is already close enough
     analogWrite(pwmA, 0); // stop motor
     digitalWrite(in1A, LOW);
     digitalWrite(in2A, LOW);
-  } else if (error > 0) {     // moto
+  } else if (output > 0) {     // moto
     digitalWrite(in1A, HIGH);
     digitalWrite(in2A, LOW);
     analogWrite(pwmA, pwm);
@@ -195,6 +269,14 @@ servo_roll.write(90-roll);
 pitch = compass.getPitch();
 servo_pitch.write(90+pitch);
 
-delay(50);
+
+/*
+DBG_PRINT(millis());
+DBG_PRINT(",");
+DBG_PRINTLN(error);
+*/
+
 lastHeading = heading;
+// heartbeat LED to indicate loop is alive 
+digitalWrite(LED_BUILTIN, millis() % 1000 < 500);
 }
