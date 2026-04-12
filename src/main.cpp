@@ -55,8 +55,7 @@ const float VM_THRESHOLD = 3.5;  // volts
 Encoder enc(2, 3);
 
 // --------------------- Control Parameters ---------------------
-const float Kp = 0.05;     // proportional gain
-const int DEADZONE = 600;   // encoder counts tolerance
+const int DEADZONE = 400;   // encoder counts tolerance
 const long SCALE_DEG_TO_ENC = 33L;  
 // ~12 counts per pot unit = ~12000 counts full-scale for 1023 pot units.
 // 12000 counts / 360° ≈ 33 counts per degree.
@@ -75,15 +74,20 @@ float continuousHeading = 0.0;
 Servo servo_pitch;
 Servo servo_roll;
 
+float prevRoll = 0.0f;
+float prevPitch = 0.0f;
+static unsigned long lastServo = 0;
+
 //PID control  variables
-float Ki = 0.0002;
-float Kd = 0.01;
+float Ki = 0.0001;
+float Kd = 0.02;
+const float Kp = 0.05;     // proportional gain
 
 // PID state variables
 float integral = 0;
 float lastError = 0;
 unsigned long lastTime = 0;
-
+const int MIN_PWM = 120; 
 
 // --------------------- Helper Functions ---------------------
 float readVmVoltage() {
@@ -202,7 +206,6 @@ if (vm > VM_THRESHOLD) {
   currentEnc = -enc.read();
 
   // --- Compute control error ---
-  //  error = targetEnc - currentEnc;
   error = currentEnc - targetEnc;
   DBG_PRINT("Error: "); 
   DBG_PRINTLN(error);  // --- Read encoder ---
@@ -236,7 +239,9 @@ if (vm > VM_THRESHOLD) {
 
   // Convert to PWM
   int pwm = abs((int)output);
-
+  if (pwm > 0 && pwm < MIN_PWM) {
+    pwm = MIN_PWM;
+  }
 
   if (pwm > 255) pwm = 255;
   // --- Control motor direction ---
@@ -263,12 +268,19 @@ if (vm > VM_THRESHOLD) {
   //    Serial.println("VM missing, driver disabled.");
 }
 
-roll = compass.getRoll();
-servo_roll.write(90-roll);  
 
-pitch = compass.getPitch();
-servo_pitch.write(90+pitch);
 
+if (millis() - lastServo > 20) { // 50 Hz max
+  roll = compass.getRoll();
+  float smoothRoll = 0.9 * prevRoll + 0.1 * roll;
+  servo_roll.write(90-smoothRoll);  
+  prevRoll = smoothRoll;
+
+  pitch = compass.getPitch();
+  float smoothPitch = 0.9 * prevPitch + 0.1 * pitch;
+  servo_pitch.write(90+smoothPitch);
+  prevPitch = smoothPitch;
+}
 
 /*
 DBG_PRINT(millis());
