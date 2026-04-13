@@ -2,7 +2,7 @@
 A gimbal suspended north pointing visor.  It is a cardanic suspension build on a base plate, with two "rings" an outer ring, which is rotating around an axis , suspended on two bearings on the the perimeter of the ring at 180 degree. The rotation angle is controlled by an servo motor on one of the two bearings. Then in the inside of this ring there is another ring, which is also rotating, but the rotating axis is at 90 degree to the rotation axis of the outer ring. Also here the rotation angle is controlled by an servo motor on one of the two bearings. Then, in the inside of this inner ring is a motor, which can rotate freely, and it is has an encoder. On this motor axle, an round platform with an arrow (or a camera) is mounted. There is a electronic circuit, which is fixed on the base plate. So, when the base platform is mounted on a irregularly moving vehicle, gondola, vessel or airplane, the circuit is designed to control the two servo motors and the motor with encoder so that the arrow always stays horizontally, and the arrow (or camera) on the platform always points to the same direction, always compensating the movements of the airplane. This is commonly known as a "gimbal".
 
 Circuit diagram
-<img width="2924" height="3486" alt="circuit_image1" src="https://github.com/user-attachments/assets/223cd1b6-320a-4dd2-85a4-4b65985be34d" />
+![Diagram](images/circuit_image1.png)
 
 
 # Stl parts:
@@ -19,10 +19,10 @@ http://raikkulenz.kapsi.fi/downloadfolder_not_protected/kokonaiskuva.pdf
 # 3D view
 
 
-<img width="481" height="495" alt="gimbal" src="https://github.com/user-attachments/assets/8aa9f2bc-c5b9-4270-953c-a2b915441136" />
-
 
 # Photo
+
+![Diagram](images/photo_BNO085_gyrovisor.jpg)
 
 ![photo_BNO085_gyrovisor](https://github.com/user-attachments/assets/4bdfa9e9-6c2b-40f2-9a14-a70920be1cfe)
 
