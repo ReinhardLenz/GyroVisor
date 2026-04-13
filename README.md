@@ -16,15 +16,11 @@ http://raikkulenz.kapsi.fi/downloadfolder_not_protected/parts_stl.pdf
 # picture of the whole GyroVisor
 http://raikkulenz.kapsi.fi/downloadfolder_not_protected/kokonaiskuva.pdf
 
-# 3D view
-
 
 
 # Photo
 
 ![Diagram](images/photo_BNO085_gyrovisor.jpg)
-
-![photo_BNO085_gyrovisor](https://github.com/user-attachments/assets/4bdfa9e9-6c2b-40f2-9a14-a70920be1cfe)
 
 
 # demo video link
