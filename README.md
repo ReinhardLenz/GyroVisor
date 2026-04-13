@@ -152,10 +152,7 @@ This circuit is designed to control a motor using an Arduino UNO, a TB6612FNG mo
 * **Electrolytic Capacitor (0.1 µF)**: Positive pins connected to Arduino Due 5V and other components; negative pins connected to Arduino Due GND and other components.  
 * **Ceramic Capacitor (0.1 µF)**: pin0 connected to Arduino Due 5V and other components; pin1 connected to Arduino Due GND and other components.
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 5b4c853 (PID control , error time diagram)
 ## **Code Documentation**
 
 The Arduino Due is programmed to control the motor driver, read encoder feedback, and manage the servos and sensor data. The logic level converter ensures proper voltage levels between the Arduino and the BNO085 sensor. The code integrates motor positioning, servo actuation, and orientation sensing into a single real‑time control loop.
@@ -168,11 +165,20 @@ The BNO085 IMU is polled for new orientation data; when new sensor events arrive
   sparkfun/SparkFun BNO08x Cortex Based IMU@^1.0.6
   arduino-libraries/Servo@^1.3.0
 	paulstoffregen/Encoder@^1.4.4
-<<<<<<< HEAD
-=======
 
->>>>>>> 5b4c853 (PID control , error time diagram)
 
+## **Testing**
+
+
+The python program called protocoling_error.py was used to make a diagram of the error between target and measured  encoder value.
+
+![Diagram](images/error_time_protocol_graphical_2nd.png)
+
+Such a protocol can be used to optimize the PID parameters.
+
+## **Ursina visualization**
+
+The python program called imu_visualizer.py  was used to generate a stylized 3D model of the device on the screen to verify the correctness of the IMU sensor signals. You can see it in the YouTube demo video linked above. To do this, the currently commented-out command lines inside Compass.cpp (74-79), /* Serial.print("X: "); Serial.print(ypr_1.yaw); etc., must be enabled (i.e., the /* */ must be removed), and other Serial.print commands may need to be disabled.
 
 
 ![Visitor Count](https://komarev.com/ghpvc/?username=ReinhardLenz&repo=GyroVisor&color=green)
