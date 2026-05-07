@@ -2,7 +2,7 @@
 A gimbal suspended north pointing visor.  It is a cardanic suspension build on a base plate, with two "rings" an outer ring, which is rotating around an axis , suspended on two bearings on the the perimeter of the ring at 180 degree. The rotation angle is controlled by an servo motor on one of the two bearings. Then in the inside of this ring there is another ring, which is also rotating, but the rotating axis is at 90 degree to the rotation axis of the outer ring. Also here the rotation angle is controlled by an servo motor on one of the two bearings. Then, in the inside of this inner ring is a motor, which can rotate freely, and it is has an encoder. On this motor axle, an round platform with an arrow (or a camera) is mounted. There is a electronic circuit, which is fixed on the base plate. So, when the base platform is mounted on a irregularly moving vehicle, gondola, vessel or airplane, the circuit is designed to control the two servo motors and the motor with encoder so that the arrow always stays horizontally, and the arrow (or camera) on the platform always points to the same direction, always compensating the movements of the airplane. This is commonly known as a "gimbal".
 
 Circuit diagram
-![Diagram](images/circuit_image1.png)
+![Diagram](images/circuit_image_1.png)
 
 
 # Stl parts:
@@ -44,120 +44,117 @@ This circuit is designed to control a motor using an Arduino UNO, a TB6612FNG mo
    * Description: Motor driver for controlling DC motors.  
    * Pins: GND, B01, B02, A02, A01, VCC, VM, PWMB, BI2, BI1, STBY, AI1, AI2, PWMA  
 2. **Motor N20 with Encoder**  
-   * Description: DC motor with integrated encoder for feedback.  
-   * Pins: Red (Motor Power \+), Black (Coding Power supply \+), Yellow (Hall signal A), Green (Hall signal B), Blue (Hall sensor power \-), White (Motor Power \-)  
-3. **USB C to 2 Wires**  
+   * Description: DC motor with an integrated encoder for feedback.  
+   * Pins: Red:M2, Black:VCC, Yellow:C2, Green:C1, Blue:GND, White:M1  
+3. **USB C to 2 fils**  
    * Description: Power supply interface.  
    * Pins: USB C, \+, \-  
-4. **Resistor (100k Ohms)**  
-   * Description: Passive component for current limiting or voltage division.  
+4. **Resistor (33k Ohms)**  
+   * Description: Resistor with a resistance of 33k Ohms.  
    * Pins: pin1, pin2  
-5. **Resistor (33k Ohms)**  
-   * Description: Passive component for current limiting or voltage division.  
-   * Pins: pin1, pin2  
-6. **Logic Level Converter**  
-   * Description: Converts voltage levels between different components.  
-   * Pins: HV1, HV2, HV, GND, HV3, HV4, LV1, LV2, LV, LV3, LV4  
-7. **Micro Servo 9G (x2)**  
+5. **Micro Servo 9G (x2)**  
    * Description: Small servo motor for precise control.  
    * Pins: GND, \+5V, PWM  
-8. **Arduino Due**  
-   * Description: Microcontroller board for controlling the circuit.  
-   * Pins: A0-A11, DAC0, DAC1, CANRX, CANTX, D0-D53, IOREF, MASTER-RESET, 5V, GND, VIN, AREF, SDA1, SCL1, MISO, Vcc, MOSI, SCK, Reset  
-9. **BNO085**  
-   * Description: Inertial Measurement Unit (IMU) for motion sensing.  
+6. **BNO085**  
+   * Description: 9-axis sensor for motion tracking.  
    * Pins: VCC, GND, SCL/SCK/RX, SDA/MISO/TX, ADR/MOSI, CS, INT, RST, PS1, PS0  
-10. **Electrolytic Capacitor (0.1 µF) (x2)**  
-    * Description: Capacitor for filtering and smoothing voltage.  
-    * Pins: \-, \+  
-11. **Ceramic Capacitor (0.1 µF) (x2)**  
-    * Description: Capacitor for filtering and decoupling.  
-    * Pins: pin0, pin1
+7. **Electrolytic Capacitor (0.1 mF) (x3)**  
+   * Description: Capacitor for smoothing voltage.  
+   * Pins: \-, \+  
+8. **Ceramic Capacitor (0.1 µF) (x2)**  
+   * Description: Capacitor for filtering high-frequency noise.  
+   * Pins: pin0, pin1  
+9. **Seeeduino XIAO**  
+   * Description: Compact microcontroller for processing and control.  
+   * Pins: A0 \- D0 \- DAC, A1 \- D1, A2 \- D2, A3 \- D3, A4 \- D4 \- SDA, A5 \- D5 \- SCL, A6 \- D6 \- TX, 5V, GND, 3V3, A10 \- D10 \- MOSI, A9 \- D9 \- MISO, A8 \- D8 \- SCK, A7 \- D7 \- RX  
+10. **Resistor (100k Ohms)**  
+    * Description: Resistor with a resistance of 100k Ohms.  
+    * Pins: pin1, pin2
 
 ## **Wiring Details**
 
 ### **TB6612FNG Motor Driver**
 
-* **VCC**: Connected to Arduino Due 5V, Logic Level Converter HV, and other components.  
-* **GND**: Connected to Arduino Due GND, Logic Level Converter GND, and USB C \-.  
-* **STBY**: Connected to Arduino Due D9 PWM.  
-* **PWMA**: Connected to Arduino Due D5 PWM.  
-* **AI1**: Connected to Arduino Due D10 PWM/SS0.  
-* **AI2**: Connected to Arduino Due D4 PWM/SS1.  
-* **A01**: Connected to Motor N20 White (Motor Power \-).  
-* **A02**: Connected to Motor N20 Red (Motor Power \+).  
-* **VM**: Connected to USB C \+ and Resistor (100k Ohms) pin1.
+* **VCC** is connected to the 3V3 pin of the Seeeduino XIAO and the VCC pin of the BNO085.  
+* **GND** is connected to the ground net shared with multiple components.  
+* **STBY** is connected to the A8 \- D8 \- SCK pin of the Seeeduino XIAO.  
+* **PWMA** is connected to the A6 \- D6 \- TX pin of the Seeeduino XIAO.  
+* **AI1** is connected to the A7 \- D7 \- RX pin of the Seeeduino XIAO.  
+* **AI2** is connected to the A3 \- D3 pin of the Seeeduino XIAO.  
+* **A02** is connected to the Red:M2 pin of the motor N20 with encoder.  
+* **A01** is connected to the White:M1 pin of the motor N20 with encoder.  
+* **VM** is connected to the positive power net shared with the USB C and other components.
 
 ### **Motor N20 with Encoder**
 
-* **Red (Motor Power \+)**: Connected to TB6612FNG Motor Driver A02.  
-* **White (Motor Power \-)**: Connected to TB6612FNG Motor Driver A01.  
-* **Black (Coding Power supply \+)**: Connected to Arduino Due IOREF, Logic Level Converter LV, and BNO085 VCC.  
-* **Blue (Hall sensor power \-)**: Connected to Arduino Due GND, Logic Level Converter GND.  
-* **Yellow (Hall signal A)**: Connected to Arduino Due D2 PWM.  
-* **Green (Hall signal B)**: Connected to Arduino Due D3 PWM.
+* **Red:M2** is connected to the A02 pin of the TB6612FNG Motor Driver.  
+* **White:M1** is connected to the A01 pin of the TB6612FNG Motor Driver.  
+* **Black:VCC** is connected to the 3V3 pin of the Seeeduino XIAO.  
+* **Blue:GND** is connected to the ground net.  
+* **Yellow:C2** is connected to the A0 \- D0 \- DAC pin of the Seeeduino XIAO.  
+* **Green:C1** is connected to the A2 \- D2 pin of the Seeeduino XIAO.
 
-### **USB C to 2 Wires**
+### **USB C to 2 fils**
 
-* **\+**: Connected to TB6612FNG Motor Driver VM and Resistor (100k Ohms) pin1.  
-* **\-**: Connected to TB6612FNG Motor Driver GND.
+* **\+** is connected to the positive power net shared with the VM pin of the TB6612FNG Motor Driver.  
+* **\-** is connected to the ground net.
 
-### **Resistors**
+### **Resistor (33k Ohms)**
 
-* **100k Ohms**: pin1 connected to USB C \+ and TB6612FNG Motor Driver VM; pin2 connected to Resistor (33k Ohms) pin2 and other components.  
-* **33k Ohms**: pin1 connected to Arduino Due A1; pin2 connected to Resistor (100k Ohms) pin2 and other components.
-
-### **Logic Level Converter**
-
-* **HV**: Connected to Arduino Due 5V and other components.  
-* **GND**: Connected to Arduino Due GND and other components.  
-* **LV**: Connected to Arduino Due IOREF, BNO085 VCC, and Motor N20 Black (Coding Power supply \+).  
-* **HV2**: Connected to Arduino Due A5.  
-* **HV4**: Connected to Arduino Due A4.  
-* **LV2**: Connected to BNO085 SCL/SCK/RX.  
-* **LV4**: Connected to BNO085 SDA/MISO/TX.
+* **pin1** is connected to the A1 \- D1 pin of the Seeeduino XIAO.  
+* **pin2** is connected to the ground net.
 
 ### **Micro Servo 9G**
 
-* **\+5V**: Connected to Arduino Due 5V and other components.  
-* **GND**: Connected to Arduino Due GND and other components.  
-* **PWM**: First servo connected to Arduino Due D6 PWM; second servo connected to Arduino Due D7 PWM.
-
-### **Arduino Due**
-
-* **5V**: Connected to TB6612FNG Motor Driver VCC, Logic Level Converter HV, and other components.  
-* **GND**: Connected to TB6612FNG Motor Driver GND, Logic Level Converter GND, and other components.  
-* **D9 PWM**: Connected to TB6612FNG Motor Driver STBY.  
-* **D5 PWM**: Connected to TB6612FNG Motor Driver PWMA.  
-* **D4 PWM/SS1**: Connected to TB6612FNG Motor Driver AI2.  
-* **D10 PWM/SS0**: Connected to TB6612FNG Motor Driver AI1.  
-* **D2 PWM**: Connected to Motor N20 Yellow (Hall signal A).  
-* **D3 PWM**: Connected to Motor N20 Green (Hall signal B).  
-* **D6 PWM**: Connected to first Micro Servo 9G PWM.  
-* **D7 PWM**: Connected to second Micro Servo 9G PWM.  
-* **A1**: Connected to Resistor (33k Ohms) pin1.  
-* **A4**: Connected to Logic Level Converter HV4.  
-* **A5**: Connected to Logic Level Converter HV2.  
-* **IOREF**: Connected to Logic Level Converter LV, BNO085 VCC, and Motor N20 Black (Coding Power supply \+).
+* **GND** is connected to the ground net.  
+* **\+5V** is connected to the positive power net.  
+* **PWM** of the first servo is connected to the A10 \- D10 \- MOSI pin of the Seeeduino XIAO.  
+* **PWM** of the second servo is connected to the A9 \- D9 \- MISO pin of the Seeeduino XIAO.
 
 ### **BNO085**
 
-* **VCC**: Connected to Arduino Due IOREF, Logic Level Converter LV, and Motor N20 Black (Coding Power supply \+).  
-* **GND**: Connected to Logic Level Converter GND.  
-* **SCL/SCK/RX**: Connected to Logic Level Converter LV2.  
-* **SDA/MISO/TX**: Connected to Logic Level Converter LV4.
+* **VCC** is connected to the 3V3 pin of the Seeeduino XIAO.  
+* **GND** is connected to the ground net.  
+* **SCL/SCK/RX** is connected to the A5 \- D5 \- SCL pin of the Seeeduino XIAO.  
+* **SDA/MISO/TX** is connected to the A4 \- D4 \- SDA pin of the Seeeduino XIAO.
 
-### **Capacitors**
+### **Electrolytic Capacitors**
 
-* **Electrolytic Capacitor (0.1 µF)**: Positive pins connected to Arduino Due 5V and other components; negative pins connected to Arduino Due GND and other components.  
-* **Ceramic Capacitor (0.1 µF)**: pin0 connected to Arduino Due 5V and other components; pin1 connected to Arduino Due GND and other components.
+* **\+** pins are connected to the positive power net.  
+* **\-** pins are connected to the ground net.
+
+### **Ceramic Capacitors**
+
+* **pin0** is connected to the positive power net.  
+* **pin1** is connected to the ground net.
+
+### **Seeeduino XIAO**
+
+* **3V3** is connected to the VCC pin of the BNO085 and the Black:VCC pin of the motor N20 with encoder.  
+* **GND** is connected to the ground net.  
+* **A0 \- D0 \- DAC** is connected to the Yellow:C2 pin of the motor N20 with encoder.  
+* **A1 \- D1** is connected to pin1 of the 33k Ohm resistor.  
+* **A2 \- D2** is connected to the Green:C1 pin of the motor N20 with encoder.  
+* **A3 \- D3** is connected to the AI2 pin of the TB6612FNG Motor Driver.  
+* **A4 \- D4 \- SDA** is connected to the SDA/MISO/TX pin of the BNO085.  
+* **A5 \- D5 \- SCL** is connected to the SCL/SCK/RX pin of the BNO085.  
+* **A6 \- D6 \- TX** is connected to the PWMA pin of the TB6612FNG Motor Driver.  
+* **A7 \- D7 \- RX** is connected to the AI1 pin of the TB6612FNG Motor Driver.  
+* **A8 \- D8 \- SCK** is connected to the STBY pin of the TB6612FNG Motor Driver.  
+* **A9 \- D9 \- MISO** is connected to the PWM pin of the second Micro Servo 9G.  
+* **A10 \- D10 \- MOSI** is connected to the PWM pin of the first Micro Servo 9G.
+
+### **Resistor (100k Ohms)**
+
+* **pin1** is connected to the positive power net.  
+* **pin2** is connected to pin2 of the 33k Ohm resistor.
 
 
 ## **Code Documentation**
 
-The Arduino Due is programmed to control the motor driver, read encoder feedback, and manage the servos and sensor data. The logic level converter ensures proper voltage levels between the Arduino and the BNO085 sensor. The code integrates motor positioning, servo actuation, and orientation sensing into a single real‑time control loop.
+The Seeeduino XIAO is programmed to control the motor driver, read encoder feedback, and manage the servos and sensor data. The logic level converter ensures proper voltage levels between the Arduino and the BNO085 sensor. The code integrates motor positioning, servo actuation, and orientation sensing into a single real‑time control loop.
 The Compass class handles all orientation processing from the BNO085. Incoming quaternion data from various SH2 sensor report types (Rotation Vector, Game Rotation Vector, and Gyro‑Integrated Rotation Vector) is converted into Euler angles using quaternion mathematics. The class updates yaw, pitch, and roll values and provides convenience functions for computing heading relative to magnetic north. The conversion logic uses trigonometric functions to derive Euler angles and supports both radians and degrees.
-In the main program, the Arduino Due initializes the motor driver (TB6612FNG) and monitors its supply voltage through a resistor divider. It reads the rotary encoder to track the motor’s current position and compares it with a continuously integrated heading that represents total rotation. A proportional controller converts position error into PWM output to drive the motor forwards or backwards. A dead‑zone prevents unnecessary oscillation when the motor is near its target.
+In the main program, the Seeeduino XIAO initializes the motor driver (TB6612FNG) and monitors its supply voltage through a resistor divider. It reads the rotary encoder to track the motor’s current position and compares it with a continuously integrated heading that represents total rotation. A proportional controller converts position error into PWM output to drive the motor forwards or backwards. A dead‑zone prevents unnecessary oscillation when the motor is near its target.
 The BNO085 IMU is polled for new orientation data; when new sensor events arrive, the Compass class updates its internal state. Pitch and roll values are used to position two servos, allowing the system to physically reflect the sensor’s orientation. The loop runs continuously, coordinating motor control, orientation tracking, and servo movement to maintain synchronized and smooth operation.
 
 ## **Libraries used**

@@ -41,10 +41,10 @@ BNO08x imu;
 
 
 // --------------------- TB6612 Motor Driver ---------------------
-const int pwmA = 5;
-const int in1A = 10;
-const int in2A = 4;
-const int stby = 9;
+const int pwmA = 6; // pin for motor A PWM speed control
+const int in1A = 7; // pin for motor AI1 direction control
+const int in2A = 3; // pin for motor AI2 direction control
+const int stby = 8; // pin for motor driver standby (active HIGH)
 
 // --------------------- VM Sensing ---------------------
 #define VM_SENSE A1
@@ -52,7 +52,7 @@ const float VM_DIVIDER = 4.03;   // 100k / 33k divider
 const float VM_THRESHOLD = 3.5;  // volts
 
 // --------------------- Encoder ---------------------
-Encoder enc(2, 3);
+Encoder enc(0, 2); // pins for encoder input (A, B)
 
 // --------------------- Control Parameters ---------------------
 const int DEADZONE = 400;   // encoder counts tolerance
@@ -116,8 +116,8 @@ void setup() {
   pinMode(stby, OUTPUT);
   digitalWrite(stby, LOW);
   //Servo initialization
-  servo_pitch.attach(7);
-  servo_roll.attach(6);
+  servo_pitch.attach(9);
+  servo_roll.attach(10);
   delay(2000);  // give bootloader time to enumerate
   blinkCode(1);  // reached setup start
   Serial.begin(9600);
