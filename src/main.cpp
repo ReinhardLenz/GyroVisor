@@ -9,7 +9,7 @@
 #define TIMEOUT_BOOT_BNO 100
 #define BNO08X_I2C_ADDRESS 0x4B
 
-const int alwaysOnButtonPin = A0;
+//const int alwaysOnButtonPin = A0;
 unsigned long millisOld;
 const unsigned long vibrationDurationMillis = 200UL;
 const unsigned long vibrationIntervalMillis = 1000UL;
@@ -44,15 +44,15 @@ BNO08x imu;
 const int pwmA = 6; // pin for motor A PWM speed control
 const int in1A = 7; // pin for motor AI1 direction control
 const int in2A = 3; // pin for motor AI2 direction control
-const int stby = 8; // pin for motor driver standby (active HIGH)
+const int stby = 0; // pin for motor driver standby (active HIGH)
 
 // --------------------- VM Sensing ---------------------
-#define VM_SENSE A1
-const float VM_DIVIDER = 4.03;   // 100k / 33k divider
-const float VM_THRESHOLD = 3.5;  // volts
+#define VM_SENSE 8
+//const float VM_DIVIDER = 1.785;   // 100k / 56k divider
+const float VM_THRESHOLD = 4.9;  // volts
 
 // --------------------- Encoder ---------------------
-Encoder enc(0, 2); // pins for encoder input (A, B)
+Encoder enc(1, 2); // pins for encoder input (A, B)
 
 // --------------------- Control Parameters ---------------------
 const int DEADZONE = 400;   // encoder counts tolerance
@@ -93,7 +93,10 @@ const int MIN_PWM = 120;
 float readVmVoltage() {
   int raw = analogRead(VM_SENSE);
   float vin = raw * (5.0 / 1023.0);
-  return vin * VM_DIVIDER;
+
+
+  return vin;
+
 }
 // Simple function to blink the built-in LED n times (for error indication)
 void blinkCode(int n) {
@@ -122,27 +125,7 @@ void setup() {
   blinkCode(1);  // reached setup start
   Serial.begin(9600);
   blinkCode(2);  // reached setup start
-/*
 
-  unsigned long t0 = millis();
-  bool serialReady = false;
-
-  while (millis() - t0 < 2000) {        // Wait max 2 sec
-    if (Serial) {
-      serialReady = true;
-      break;
-    }
-    delay(10);
-  }
-
-
-  if (serialReady) {
-    Serial.println("Serial monitor connected!");
-    digitalWrite(LED_BUILTIN, HIGH);    // optional indicator
-  } else {
-    // Serial monitor not connected, continue anyway
-  }
-*/
   Wire.begin();
   blinkCode(3);  // reached setup start
 
@@ -160,7 +143,7 @@ void setup() {
   }
   blinkCode(4);  // after imu.begin loop
 
-  if (!imu.enableGameRotationVector(50)) {
+  if (!imu.enableGameRotationVector(200)) {
     blinkCode(7); // enable report failed
   } else {
     blinkCode(5); // enabled ok
@@ -175,6 +158,7 @@ t = !t;
 digitalWrite(LED_BUILTIN, t);
 
 float vm = readVmVoltage();
+
 if (vm > VM_THRESHOLD) {
   digitalWrite(stby, HIGH); // enable motor driver
   //    heading = compass.getHeading(degree_shift);   // 0–360°
@@ -202,13 +186,20 @@ if (vm > VM_THRESHOLD) {
   continuousHeading += delta; //continuousHeading can grow beyond 0–360° (e.g. −720°, +1440°, etc.) It represents how much total rotation has occurred.
   // --- Convert continuous heading → target encoder counts ---
   targetEnc = (long)(continuousHeading * SCALE_DEG_TO_ENC); // also targetEnc can grow beyond 11880 or lelow -11880
+//  DBG_PRINT("H:");
+//  DBG_PRINT(targetEnc);
 
-  currentEnc = -enc.read();
+  static uint32_t lastEncRead = 0;
 
+  if (millis() - lastEncRead > 10) {
+      currentEnc = enc.read();
+      lastEncRead = millis();
+  }
+
+//  DBG_PRINT("c:");
+//  DBG_PRINTLN(currentEnc);
   // --- Compute control error ---
-  error = currentEnc - targetEnc;
-  DBG_PRINT("Error: "); 
-  DBG_PRINTLN(error);  // --- Read encoder ---
+  error = targetEnc-currentEnc;
 
   long absErr = abs(error);
   // --- Compute PWM (proportional control) ---
@@ -265,28 +256,29 @@ if (vm > VM_THRESHOLD) {
     // VM below threshold → disable motor driver
     digitalWrite(stby, LOW);
     analogWrite(pwmA, 0);
-  //    Serial.println("VM missing, driver disabled.");
+
 }
 
 
 
-if (millis() - lastServo > 20) { // 50 Hz max
+if (millis() - lastServo > 20) {
+
+  lastServo = millis();
+
   roll = compass.getRoll();
-  float smoothRoll = 0.9 * prevRoll + 0.1 * roll;
-  servo_roll.write(90-smoothRoll);  
-  prevRoll = smoothRoll;
+ servo_roll.write((int)(90 - roll));
 
   pitch = compass.getPitch();
-  float smoothPitch = 0.9 * prevPitch + 0.1 * pitch;
-  servo_pitch.write(90+smoothPitch);
-  prevPitch = smoothPitch;
+  servo_pitch.write((int)(90 + pitch));
 }
 
-/*
-DBG_PRINT(millis());
-DBG_PRINT(",");
-DBG_PRINTLN(error);
-*/
+
+static uint32_t lastPrint=0;
+
+if(millis()-lastPrint>1000){
+    Serial.println("alive");
+    lastPrint=millis();
+}
 
 lastHeading = heading;
 // heartbeat LED to indicate loop is alive 
