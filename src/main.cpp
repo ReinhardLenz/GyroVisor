@@ -4,6 +4,7 @@
 #include "Compass.h"
 #include <Wire.h>
 #include <Servo.h>
+#include "A_servo.h"
 
 #define BNO08X_RESET -1
 #define TIMEOUT_BOOT_BNO 100
@@ -110,7 +111,7 @@ void blinkCode(int n) {
 
 // --------------------- Setup ---------------------
 void setup() {
-
+  initServo();
   pinMode(LED_BUILTIN, OUTPUT);
   // Motor control pins
   pinMode(pwmA, OUTPUT);
@@ -266,10 +267,10 @@ if (millis() - lastServo > 20) {
   lastServo = millis();
 
   roll = compass.getRoll();
- servo_roll.write((int)(90 - roll));
-
+  setServoAngle0(90-roll);
   pitch = compass.getPitch();
-  servo_pitch.write((int)(90 + pitch));
+  setServoAngle1(90-pitch);
+
 }
 
 

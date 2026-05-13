@@ -4,8 +4,8 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
 #define SERVO_MIN  120  // Min pulse length out of 4096
 #define SERVO_MAX  600  // Max pulse length out of 4096
-#define SERVO_PIN1 0    
-#define SERVO_PIN1 1    
+//#define SERVO_PIN1 0    
+//#define SERVO_PIN1 1    
 
 void initServo() {
   pwm.begin();
