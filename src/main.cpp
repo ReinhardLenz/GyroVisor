@@ -41,10 +41,14 @@ BNO08x imu;
 
 
 // --------------------- TB6612 Motor Driver ---------------------
-const int pwmA = 6; // pin for motor A PWM speed control
-const int in1A = 7; // pin for motor AI1 direction control
-const int in2A = 3; // pin for motor AI2 direction control
+const int pwmA = 3; // pin for motor A PWM speed control
+const int in1A = 10; // pin for motor AI1 direction control
+const int in2A = 9; // pin for motor AI2 direction control
 const int stby = 0; // pin for motor driver standby (active HIGH)
+const int Servo_pitch = 6; // pin for servo control
+const int Servo_roll = 7; // pin for servo control
+
+
 
 // --------------------- VM Sensing ---------------------
 #define VM_SENSE 8
@@ -119,8 +123,8 @@ void setup() {
   pinMode(stby, OUTPUT);
   digitalWrite(stby, LOW);
   //Servo initialization
-  servo_pitch.attach(9);
-  servo_roll.attach(10);
+  servo_pitch.attach(Servo_pitch);
+  servo_roll.attach(Servo_roll);
   delay(2000);  // give bootloader time to enumerate
   blinkCode(1);  // reached setup start
   Serial.begin(9600);
@@ -143,7 +147,7 @@ void setup() {
   }
   blinkCode(4);  // after imu.begin loop
 
-  if (!imu.enableGameRotationVector(200)) {
+  if (!imu.enableGameRotationVector(1000)) {
     blinkCode(7); // enable report failed
   } else {
     blinkCode(5); // enabled ok
@@ -191,7 +195,7 @@ if (vm > VM_THRESHOLD) {
 
   static uint32_t lastEncRead = 0;
 
-  if (millis() - lastEncRead > 10) {
+  if (millis() - lastEncRead > 30) {
       currentEnc = enc.read();
       lastEncRead = millis();
   }
@@ -261,7 +265,7 @@ if (vm > VM_THRESHOLD) {
 
 
 
-if (millis() - lastServo > 20) {
+if (millis() - lastServo > 131) {
 
   lastServo = millis();
 
