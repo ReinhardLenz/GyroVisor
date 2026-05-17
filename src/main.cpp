@@ -51,7 +51,7 @@ const int Servo_roll = 7; // pin for servo control
 
 
 // --------------------- VM Sensing ---------------------
-#define VM_SENSE 8
+#define VM_SENSE 8  // ADC pin for sensing motor supply voltage (VM). Connect a voltage divider from VM to this pin, with the midpoint going to the ADC pin and the bottom resistor to GND. The top resistor goes to VM. For example, a 56kΩ bottom resistor and 100kΩ top resistor gives a ~1.785 divider, so 12V on VM would read about 6.7V at the ADC pin, which is above the 5V max ADC input but we will just treat it as "over threshold". Adjust the threshold accordingly.
 //const float VM_DIVIDER = 1.785;   // 100k / 56k divider
 const float VM_THRESHOLD = 4.9;  // volts
 
@@ -93,6 +93,10 @@ float lastError = 0;
 unsigned long lastTime = 0;
 const int MIN_PWM = 120; 
 
+static uint32_t lastEncoderChange = 0;
+static long prevEnc = 0;
+
+
 // --------------------- Helper Functions ---------------------
 float readVmVoltage() {
   int raw = analogRead(VM_SENSE);
@@ -133,7 +137,7 @@ void setup() {
   Wire.begin();
   blinkCode(3);  // reached setup start
 
-  Wire.setClock(10000);
+  Wire.setClock(400000);
   delay(300);   // IMPORTANT: let BNO085 boot 
   // Initialize IMU
 
@@ -265,7 +269,7 @@ if (vm > VM_THRESHOLD) {
 
 
 
-if (millis() - lastServo > 131) {
+if (millis() - lastServo > 20) {
 
   lastServo = millis();
 
@@ -277,12 +281,41 @@ if (millis() - lastServo > 131) {
 }
 
 
-static uint32_t lastPrint=0;
 
-if(millis()-lastPrint>1000){
-    Serial.println("alive");
-    lastPrint=millis();
+if (currentEnc != prevEnc) {
+    lastEncoderChange = millis();
+    prevEnc = currentEnc;
 }
+
+static long prevEnc = 0;
+
+if (currentEnc != prevEnc) {
+    lastEncoderChange = millis();
+    prevEnc = currentEnc;
+}
+
+if (abs(error) > 2000 &&
+    (int) (pwm) > 180 &&
+    millis() - lastEncoderChange > 1000) {
+
+    Serial.println("OUTPUT SYSTEM FROZEN");
+
+    // full peripheral recovery
+    servo_pitch.detach();
+    servo_roll.detach();
+
+    analogWrite(pwmA , 0);
+
+    delay(50);
+
+    servo_pitch.attach(Servo_pitch);
+    servo_roll.attach(Servo_roll);
+
+    analogWrite(pwmA, (int)(pwm));
+
+    delay(50);
+}
+
 
 lastHeading = heading;
 // heartbeat LED to indicate loop is alive 
