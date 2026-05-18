@@ -2,7 +2,7 @@
 A gimbal suspended north pointing visor.  It is a cardanic suspension build on a base plate, with two "rings" an outer ring, which is rotating around an axis , suspended on two bearings on the the perimeter of the ring at 180 degree. The rotation angle is controlled by an servo motor on one of the two bearings. Then in the inside of this ring there is another ring, which is also rotating, but the rotating axis is at 90 degree to the rotation axis of the outer ring. Also here the rotation angle is controlled by an servo motor on one of the two bearings. Then, in the inside of this inner ring is a motor, which can rotate freely, and it is has an encoder. On this motor axle, an round platform with an arrow (or a camera) is mounted. There is a electronic circuit, which is fixed on the base plate. So, when the base platform is mounted on a irregularly moving vehicle, gondola, vessel or airplane, the circuit is designed to control the two servo motors and the motor with encoder so that the arrow always stays horizontally, and the arrow (or camera) on the platform always points to the same direction, always compensating the movements of the airplane. This is commonly known as a "gimbal".
 
 Circuit diagram
-![Diagram](images/circuit_image_Seeeduino_XIAO.png)
+![Diagram](images/circuit_image_pin_assignment_3_10_9_0_6_7.png)
 
 
 # Stl parts:
@@ -20,7 +20,7 @@ http://raikkulenz.kapsi.fi/downloadfolder_not_protected/kokonaiskuva.pdf
 
 # Photo
 
-![Diagram](images/photo_BNO085_gyrovisor.jpg)
+![Diagram](images/small_breadboard_seeeduino_xiao.jpg)
 
 
 # demo video link
@@ -71,84 +71,75 @@ This circuit is designed to control a motor using an Arduino UNO, a TB6612FNG mo
     * Description: Resistor with a resistance of 100k Ohms.  
     * Pins: pin1, pin2
 
-## **Wiring Details**
+### **BNO085**
+
+* **GND** is connected to the common ground shared with other components.  
+* **VCC** is connected to the 3V3 pin of the Seeeduino XIAO.  
+* **SCL/SCK/RX** is connected to the A5 \- D5 \- SCL pin of the Seeeduino XIAO.  
+* **SDA/MISO/TX** is connected to the A4 \- D4 \- SDA pin of the Seeeduino XIAO.  
+* **ADR/MOSI** is connected to the VCC of the TB6612FNG Motor Driver.
 
 ### **TB6612FNG Motor Driver**
 
-* **VCC** is connected to the 3V3 pin of the Seeeduino XIAO and the VCC pin of the BNO085.  
-* **GND** is connected to the ground net shared with multiple components.  
-* **STBY** is connected to the A8 \- D8 \- SCK pin of the Seeeduino XIAO.  
-* **PWMA** is connected to the A6 \- D6 \- TX pin of the Seeeduino XIAO.  
-* **AI1** is connected to the A7 \- D7 \- RX pin of the Seeeduino XIAO.  
-* **AI2** is connected to the A3 \- D3 pin of the Seeeduino XIAO.  
-* **A02** is connected to the Red:M2 pin of the motor N20 with encoder.  
-* **A01** is connected to the White:M1 pin of the motor N20 with encoder.  
-* **VM** is connected to the positive power net shared with the USB C and other components.
+* **GND** is connected to the common ground.  
+* **VCC** is connected to the 3V3 pin of the Seeeduino XIAO.  
+* **PWMA** is connected to the A3 \- D3 pin of the Seeeduino XIAO.  
+* **AI1** is connected to the A10 \- D10 \- MOSI pin of the Seeeduino XIAO.  
+* **AI2** is connected to the A9 \- D9 \- MISO pin of the Seeeduino XIAO.  
+* **AO1** is connected to the Motor power \- pin of the N20 motor.  
+* **AO2** is connected to the Motor power \+ pin of the N20 motor.  
+* **STBY** is connected to the A0 \- D0 \- DAC pin of the Seeeduino XIAO.  
+* **VM** is connected to the \+ pin of the USB C to 2 fils.
 
 ### **Motor N20 with Encoder**
 
-* **Red:M2** is connected to the A02 pin of the TB6612FNG Motor Driver.  
-* **White:M1** is connected to the A01 pin of the TB6612FNG Motor Driver.  
-* **Black:VCC** is connected to the 3V3 pin of the Seeeduino XIAO.  
-* **Blue:GND** is connected to the ground net.  
-* **Yellow:C2** is connected to the A0 \- D0 \- DAC pin of the Seeeduino XIAO.  
-* **Green:C1** is connected to the A2 \- D2 pin of the Seeeduino XIAO.
-
-### **USB C to 2 fils**
-
-* **\+** is connected to the positive power net shared with the VM pin of the TB6612FNG Motor Driver.  
-* **\-** is connected to the ground net.
-
-### **Resistor (33k Ohms)**
-
-* **pin1** is connected to the A1 \- D1 pin of the Seeeduino XIAO.  
-* **pin2** is connected to the ground net.
+* **Motor power \+** is connected to the AO2 pin of the TB6612FNG Motor Driver.  
+* **Motor power \-** is connected to the AO1 pin of the TB6612FNG Motor Driver.  
+* **Coding power supply \+** is connected to the 3V3 pin of the Seeeduino XIAO.  
+* **Feedback signal** is connected to the A2 \- D2 pin of the Seeeduino XIAO.
 
 ### **Micro Servo 9G**
 
-* **GND** is connected to the ground net.  
-* **\+5V** is connected to the positive power net.  
-* **PWM** of the first servo is connected to the A10 \- D10 \- MOSI pin of the Seeeduino XIAO.  
-* **PWM** of the second servo is connected to the A9 \- D9 \- MISO pin of the Seeeduino XIAO.
+* **GND** is connected to the common ground.  
+* **\+5V** is connected to the \+ pin of the USB C to 2 fils.  
+* **PWM** is connected to the A7 \- D7 \- RX pin of the Seeeduino XIAO.
 
-### **BNO085**
+### **Micro Servo 9G (1)**
 
-* **VCC** is connected to the 3V3 pin of the Seeeduino XIAO.  
-* **GND** is connected to the ground net.  
-* **SCL/SCK/RX** is connected to the A5 \- D5 \- SCL pin of the Seeeduino XIAO.  
-* **SDA/MISO/TX** is connected to the A4 \- D4 \- SDA pin of the Seeeduino XIAO.
+* **GND** is connected to the common ground.  
+* **\+5V** is connected to the \+ pin of the USB C to 2 fils.  
+* **PWM** is connected to the A6 \- D6 \- TX pin of the Seeeduino XIAO.
 
-### **Electrolytic Capacitors**
+### **Resistor**
 
-* **\+** pins are connected to the positive power net.  
-* **\-** pins are connected to the ground net.
+* **pin1** is connected to the Coding power \+ pin of the N20 motor.  
+* **pin2** is connected to pin1 of Resistor (1).
 
-### **Ceramic Capacitors**
+### **Resistor (1)**
 
-* **pin0** is connected to the positive power net.  
-* **pin1** is connected to the ground net.
+* **pin1** is connected to pin2 of Resistor.  
+* **pin2** is connected to the VM pin of the TB6612FNG Motor Driver.
+
+### **USB C to 2 fils**
+
+* **\+** is connected to the VM pin of the TB6612FNG Motor Driver and \+5V pins of both Micro Servo 9G units.  
+* **\-** is connected to the common ground.
 
 ### **Seeeduino XIAO**
 
-* **3V3** is connected to the VCC pin of the BNO085 and the Black:VCC pin of the motor N20 with encoder.  
-* **GND** is connected to the ground net.  
-* **A0 \- D0 \- DAC** is connected to the Yellow:C2 pin of the motor N20 with encoder.  
-* **A1 \- D1** is connected to pin1 of the 33k Ohm resistor.  
-* **A2 \- D2** is connected to the Green:C1 pin of the motor N20 with encoder.  
-* **A3 \- D3** is connected to the AI2 pin of the TB6612FNG Motor Driver.  
+* **GND** is connected to the common ground.  
+* **3V3** is connected to the VCC of the BNO085 and coding Power supply \+ of the N20 motor.  
+* **A0 \- D0 \- DAC** is connected to the STBY pin of the TB6612FNG Motor Driver.  
+* **A1 \- D1** is connected to the feedback signal pin of the N20 motor.  
+* **A2 \- D2** is connected to the feedback signal pin of the N20 motor.  
+* **A3 \- D3** is connected to the PWMA pin of the TB6612FNG Motor Driver.  
 * **A4 \- D4 \- SDA** is connected to the SDA/MISO/TX pin of the BNO085.  
 * **A5 \- D5 \- SCL** is connected to the SCL/SCK/RX pin of the BNO085.  
-* **A6 \- D6 \- TX** is connected to the PWMA pin of the TB6612FNG Motor Driver.  
-* **A7 \- D7 \- RX** is connected to the AI1 pin of the TB6612FNG Motor Driver.  
-* **A8 \- D8 \- SCK** is connected to the STBY pin of the TB6612FNG Motor Driver.  
-* **A9 \- D9 \- MISO** is connected to the PWM pin of the second Micro Servo 9G.  
-* **A10 \- D10 \- MOSI** is connected to the PWM pin of the first Micro Servo 9G.
-
-### **Resistor (100k Ohms)**
-
-* **pin1** is connected to the positive power net.  
-* **pin2** is connected to pin2 of the 33k Ohm resistor.
-
+* **A6 \- D6 \- TX** is connected to the PWM pin of the Micro Servo 9G (1).  
+* **A7 \- D7 \- RX** is connected to the PWM pin of the Micro Servo 9G.  
+* **A8 \- D8 \- SCK** is connected to pin2 of Resistor (1).  
+* **A9 \- D9 \- MISO** is connected to the AI2 pin of the TB6612FNG Motor Driver.  
+* **A10 \- D10 \- MOSI** is connected to the AI1 pin of the TB6612FNG Motor Driver.
 
 ## **Code Documentation**
 
