@@ -56,10 +56,10 @@ const int Servo_roll = 7; // pin for servo control
 const float VM_THRESHOLD = 4.9;  // volts
 
 // --------------------- Encoder ---------------------
-Encoder enc(1, 2); // pins for encoder input (A, B)
+//Encoder enc(1, 2); // pins for encoder input (A, B)
 
 // --------------------- Control Parameters ---------------------
-const int DEADZONE = 400;   // encoder counts tolerance
+const int DEADZONE = 100;   // encoder counts tolerance
 const long SCALE_DEG_TO_ENC = 33L;  
 // ~12 counts per pot unit = ~12000 counts full-scale for 1023 pot units.
 // 12000 counts / 360° ≈ 33 counts per degree.
@@ -83,15 +83,14 @@ float prevPitch = 0.0f;
 static unsigned long lastServo = 0;
 
 //PID control  variables
-float Ki = 0.0001;
-float Kd = 0.02;
-const float Kp = 0.05;     // proportional gain
+float Kd = 0.00;
+const float Kp = 0.02;     // proportional gain
 
 // PID state variables
 float integral = 0;
 float lastError = 0;
 unsigned long lastTime = 0;
-const int MIN_PWM = 120; 
+const int MIN_PWM = 40; 
 
 static uint32_t lastEncoderChange = 0;
 static long prevEnc = 0;
@@ -101,11 +100,24 @@ static long prevEnc = 0;
 float readVmVoltage() {
   int raw = analogRead(VM_SENSE);
   float vin = raw * (5.0 / 1023.0);
-
-
   return vin;
-
 }
+
+
+volatile long encoderCount = 0;
+
+const int encoderA = 1;
+const int encoderB = 2;
+
+void encoderISR() {
+
+    if (digitalRead(encoderB))
+        encoderCount++;
+    else
+        encoderCount--;
+}
+
+
 // Simple function to blink the built-in LED n times (for error indication)
 void blinkCode(int n) {
   for (int i = 0; i < n; i++) {
@@ -130,12 +142,26 @@ void setup() {
   servo_pitch.attach(Servo_pitch);
   servo_roll.attach(Servo_roll);
   delay(2000);  // give bootloader time to enumerate
+  
+pinMode(encoderA, INPUT_PULLUP);
+pinMode(encoderB, INPUT_PULLUP);
+
+attachInterrupt(
+    digitalPinToInterrupt(encoderA),
+    encoderISR,
+    RISING
+);
+
+  
   blinkCode(1);  // reached setup start
   Serial.begin(9600);
   blinkCode(2);  // reached setup start
 
   Wire.begin();
   blinkCode(3);  // reached setup start
+  
+  
+
 
   Wire.setClock(400000);
   delay(300);   // IMPORTANT: let BNO085 boot 
@@ -199,46 +225,35 @@ if (vm > VM_THRESHOLD) {
 
   static uint32_t lastEncRead = 0;
 
-  if (millis() - lastEncRead > 30) {
-      currentEnc = enc.read();
-      lastEncRead = millis();
-  }
-
-//  DBG_PRINT("c:");
-//  DBG_PRINTLN(currentEnc);
+  currentEnc = encoderCount;
+  
   // --- Compute control error ---
   error = targetEnc-currentEnc;
 
   long absErr = abs(error);
-  // --- Compute PWM (proportional control) ---
-
-
- //PID control
-  // --- Time step ---
-  unsigned long now = millis();
-  float dt = (now - lastTime) / 1000.0;  // seconds
-  lastTime = now;
-
-  // Avoid division by zero
-  if (dt <= 0) dt = 0.001;
-
-  // --- PID terms ---
-  float P = error;
-  integral += error * dt;
-
-  // Anti-windup (important!)
-  if (integral > 10000) integral = 10000;
-  if (integral < -10000) integral = -10000;
-
-  float derivative = (error - lastError) / dt;
-  lastError = error;
 
   // --- PID output ---
-  float output = Kp * P + Ki * integral + Kd * derivative;
+  unsigned long now = millis();
+  float dt = (now - lastTime) / 1000.0;
+
+  float derivative = 0;
+
+  if (dt > 0)
+      derivative = (error - lastError) / dt;
+
+  float output = Kp * error + Kd * derivative;
+
+  lastError = error;
+  lastTime = now;
+
+
 
   // Convert to PWM
   int pwm = abs((int)output);
-  if (pwm > 0 && pwm < MIN_PWM) {
+  
+
+  
+  if (absErr > 500 && pwm < MIN_PWM) {
     pwm = MIN_PWM;
   }
 
