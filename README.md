@@ -1,12 +1,9 @@
-
-
-# THIS README MUST BE UPDATED, EVERYTHING IS WRONG!!!!!
-
 # GyroVisor
 A gimbal suspended north pointing visor.  It is a cardanic suspension build on a base plate, with two "rings" an outer ring, which is rotating around an axis , suspended on two bearings on the the perimeter of the ring at 180 degree. The rotation angle is controlled by an servo motor on one of the two bearings. Then in the inside of this ring there is another ring, which is also rotating, but the rotating axis is at 90 degree to the rotation axis of the outer ring. Also here the rotation angle is controlled by an servo motor on one of the two bearings. Then, in the inside of this inner ring is a motor, which can rotate freely, and it is has an encoder. On this motor axle, an round platform with an arrow (or a camera) is mounted. There is a electronic circuit, which is fixed on the base plate. So, when the base platform is mounted on a irregularly moving vehicle, gondola, vessel or airplane, the circuit is designed to control the two servo motors and the motor with encoder so that the arrow always stays horizontally, and the arrow (or camera) on the platform always points to the same direction, always compensating the movements of the airplane. This is commonly known as a "gimbal".
 
 Circuit diagram
-<img width="3000" height="3934" alt="gyrovisor" src="https://github.com/user-attachments/assets/267ae83e-ee7e-4d76-96ea-76e28eb54790" />
+![Diagram](images/circuit_image_PCA9685.png)
+
 
 # Stl parts:
 
@@ -19,281 +16,172 @@ http://raikkulenz.kapsi.fi/downloadfolder_not_protected/parts_stl.pdf
 # picture of the whole GyroVisor
 http://raikkulenz.kapsi.fi/downloadfolder_not_protected/kokonaiskuva.pdf
 
-# 3D view
-
-
-<img width="481" height="495" alt="gimbal" src="https://github.com/user-attachments/assets/8aa9f2bc-c5b9-4270-953c-a2b915441136" />
 
 
 # Photo
 
-![N20-motor-TB6612FNG_bridge_photo](https://github.com/user-attachments/assets/3dac5248-ad4f-407c-a7a6-ff1216dc90db)
+![Diagram](images/small_breadboard_seeeduino_xiao.jpg)
 
 
-# demo video link
+![Diagram](images/small_breadboard_seeeduino_xiao_side_front.jpg)
 
-[![Watch the video](https://img.youtube.com/vi/kvSa0N7uzfM/0.jpg)]
-(https://www.youtube.com/watch?v=kvSa0N7uzfM)
 
-## Circuit Documentation
+![Diagram](images/small_breadboard_seeeduino_xiao_side.jpg)
 
-Summary
 
-This circuit is designed to control a motor using an Arduino UNO, a TB6612FNG motor driver, and a motor with an encoder. The circuit also includes a potentiometer for input, a logic level converter, a BNO055 sensor, and a PWM servo breakout board to control servos. The Arduino UNO reads the potentiometer and encoder values to control the motor's position using a proportional control algorithm. The circuit is powered via a USB C connection.
+# Shopping list link collection
 
-## Component List
+https://linktr.ee/Gyrovisor_gimbal
 
-### shopping basket
+# **Circuit Documentation**
 
-In the linktree shopping basket, there are links pointing to the right components.
-https://linktr.ee/gyrovisor
+## **Summary**
 
+This circuit is designed to control a motor using an Arduino UNO, a TB6612FNG motor driver, and a motor with an encoder. The circuit also includes a logic level converter, a BNO055 sensor, and a PWM servo breakout board to control servos. The Arduino UNO reads the encoder values to control the motor's position using a proportional control algorithm. The circuit is powered via a USB C connection.
 
-### Arduino UNO
-Description: A microcontroller board based on the ATmega328P.
-Pins: UNUSED, IOREF, Reset, 3.3V, 5V, GND, Vin, A0, A1, A2, A3, A4, A5, SCL, SDA, AREF, D13, D12, D11, D10, D9, D8, D7, D6, D5, D4, D3, D2, D1, D0.
+## **Component List**
 
-### Trimmer Potentiometer
-Description: A variable resistor used to adjust the input voltage.
-Pins: leg1, wiper, leg2.
-Properties: Resistance: 10,000 Ohms.
+1. **TB6612FNG Motor Driver**  
+   * **Description**: Dual H-Bridge motor driver for controlling motor speed and direction.  
+   * **Pins**: GND, B01, B02, A02, A01, VCC, VM, PWMB, BI2, BI1, STBY, AI1, AI2, PWMA  
+2. **USB C to 2 fils**  
+   * **Description**: Provides power supply to the circuit.  
+   * **Pins**: USB C, \+, \-  
+3. **Resistor (33k Ohms)**  
+   * **Description**: Used for voltage division or current limiting.  
+   * **Pins**: pin1, pin2  
+4. **Micro Servo 9G**  
+   * **Description**: Small servo motor for precise control of angular position.  
+   * **Pins**: GND, \+5V, PWM  
+5. **BNO085**  
+   * **Description**: 9-axis sensor for orientation and motion detection.  
+   * **Pins**: VCC, GND, SCL/SCK/RX, SDA/MISO/TX, ADR/MOSI, CS, INT, RST, PS1, PS0  
+6. **Electrolytic Capacitor (0.0001 Farads)**  
+   * **Description**: Used for smoothing voltage fluctuations.  
+   * **Pins**: \-, \+  
+7. **Seeeduino XIAO**  
+   * **Description**: Compact microcontroller board based on the SAMD21.  
+   * **Pins**: A0 \- D0 \- DAC, A1 \- D1, A2 \- D2, A3 \- D3, A4 \- D4 \- SDA, A5 \- D5 \- SCL, A6 \- D6 \- TX, 5V, GND, 3V3, A10 \- D10 \- MOSI, A9 \- D9 \- MISO, A8 \- D8 \- SCK, A7 \- D7 \- RX  
+8. **Resistor (100k Ohms)**  
+   * **Description**: Used for voltage division or current limiting.  
+   * **Pins**: pin1, pin2  
+9. **PCA9685 Breakout Board**  
+   * **Description**: 16-channel PWM driver for controlling servos and LEDs.  
+   * **Pins**: GND, Output Enable, SCL, SDA, VCC, V+ (Not used), Out0 to Out15, V+0 to V+15, GND0 to GND15, A0 to A5, GND-O, OE-O, SCL-O, SDA-O, VCC-O, V+-0 (NOT USED), V+-IN, GND-IN, AO+ to A5+  
+10. **Motor N20 with Encoder**  
+    * **Description**: Small DC motor with built-in encoder for feedback.  
+    * **Pins**: Red:M2:Red power supply positive pole :Motor Power \+, Black:VCC:Hall sensor power positive pole:Coding Power supply \+, Yellow:C2:Hall signal A:feedback signal, Green:C1:Hall signal B:feedback signal, Blue:GND:Hall sensor power negative pole, White:M1:White power supply negative pole:Motor Power \-
 
-### TB6612FNG Motor Driver
-Description: A motor driver used to control the motor's direction and speed.
-Pins: GND, B01, B02, A02, A01, VCC, VM, PWMB, BI2, BI1, STBY, AI1, AI2, PWMA.
+## ---
 
-<img width="209" height="210" alt="TB6612FNG_picture" src="https://github.com/user-attachments/assets/1f35821a-2ae7-48b7-86bd-0179a3a10b7b" />
+**Wiring Details**
 
-### Motor N20 with Encoder
-Description: A small DC motor with an integrated encoder for feedback.
-Pins: Red:M2, Black:VCC, Yellow:C2, Green:C1, Blue:GND, White:M1.
+### **TB6612FNG Motor Driver**
 
-<img width="726" height="201" alt="N20-motor" src="https://github.com/user-attachments/assets/238b897d-e499-4351-9ce7-15d6c06e4662" />
+* **GND**: Connected to the common ground.  
+* **VCC**: Connected to the 3.3V power rail.  
+* **VM**: Connected to the positive terminal of the USB power supply and the electrolytic capacitor.  
+* **STBY**: Connected to the Seeeduino XIAO pin A8 \- D8 \- SCK.  
+* **PWMA**: Connected to the Seeeduino XIAO pin A6 \- D6 \- TX.  
+* **AI1**: Connected to the Seeeduino XIAO pin A7 \- D7 \- RX.  
+* **AI2**: Connected to the Seeeduino XIAO pin A3 \- D3.  
+* **A01**: Connected to the White:M1 pin of the motor N20.  
+* **A02**: Connected to the Red:M2 pin of the motor N20.
 
+### **USB C to 2 fils**
 
-### USB C to 2 fils
-Description: A power supply interface. Any USB cable will do, one end connected to a standard phone charger, and at the other  side, you have to strip the cable sheath. Red wire: This wire is usually the power wire and carries +5V. Black wire: This wire is generally used for ground (GND).
-[Other colors (such as green and white): These wires are used for data transmission (D+ and D-). these wires can be cut off completely and are not used in this project]
-Pins: USB C, +, -.
-Resistor (100k Ohms)
-Description: A fixed resistor used in the voltage divider.
-Pins: pin1, pin2.
+* **\+**: Connected to the positive terminal of the electrolytic capacitor and the VM pin of the TB6612FNG Motor Driver.  
+* **\-**: Connected to the common ground.
 
-### Resistor (33k Ohms)
-Description: A fixed resistor used in the voltage divider.
-Pins: pin1, pin2.
+### **Resistor (33k Ohms)**
 
-Logic Level Converter
-Description: Converts voltage levels between different components.
-Pins: HV1, HV2, HV, GND, HV3, HV4, LV1, LV2, LV, LV3, LV4.
+* **pin1**: Connected to the Seeeduino XIAO pin A1 \- D1.  
+* **pin2**: Connected to the common ground.
 
-### BNO055
-Description: An intelligent 9-axis absolute orientation sensor.
-Pins: Vin, 3vo, GND, SDA, SCL, RST.
+### **Micro Servo 9G**
 
-<img width="328" height="433" alt="BNO055_picture" src="https://github.com/user-attachments/assets/da19a43a-91b5-44ef-9ab6-82c22055d9f2" />
+* **PWM**: Connected to the PCA9685 Breakout Board pin Out0.  
+* **\+5V**: Connected to the PCA9685 Breakout Board pin V+0.  
+* **GND**: Connected to the PCA9685 Breakout Board pin GND0.
 
-<img width="770" height="360" alt="BNO055-pinout" src="https://github.com/user-attachments/assets/3621b246-3d60-414e-83d5-66aa5ae3098c" />
+### **BNO085**
 
+* **VCC**: Connected to the 3.3V power rail.  
+* **GND**: Connected to the common ground.  
+* **SCL/SCK/RX**: Connected to the PCA9685 Breakout Board pin SCL and the Seeeduino XIAO pin A5 \- D5 \- SCL.  
+* **SDA/MISO/TX**: Connected to the PCA9685 Breakout Board pin SDA and the Seeeduino XIAO pin A4 \- D4 \- SDA.  
+* **ADR/MOSI**: Connected to the 3.3V power rail.
 
-### Micro Servo 9G
-Description: A small servo motor for precise control.
-Pins: GND, +5V, PWM.
+### **Electrolytic Capacitor**
 
-### Adafruit PCA9685 PWM Servo Breakout
-Description: A PWM driver board for controlling servos.
-Pins: 5.0V, GND, PWRIN, PWM7, PWM6, PWM5, PWM4, PWM3, PWM2, PWM1, PWM0, VCC, SDA, SCL, OE, PWM15, PWM14, PWM13, PWM12, PWM11, PWM10, PWM9, PWM8.
+* **\+**: Connected to the positive terminal of the USB power supply and the VM pin of the TB6612FNG Motor Driver.  
+* **\-**: Connected to the common ground.
 
-<img width="718" height="414" alt="PCA9685-picture_with_explanations" src="https://github.com/user-attachments/assets/215f01b7-36d2-429c-8f6a-11c99bd26670" />
+### **Seeeduino XIAO**
 
+* **3V3**: Connected to the 3.3V power rail.  
+* **GND**: Connected to the common ground.  
+* **A0 \- D0 \- DAC**: Connected to the Yellow:C2 pin of the motor N20.  
+* **A1 \- D1**: Connected to pin1 of the 33k Ohms resistor.  
+* **A2 \- D2**: Connected to the Green:C1 pin of the motor N20.  
+* **A3 \- D3**: Connected to the AI2 pin of the TB6612FNG Motor Driver.  
+* **A4 \- D4 \- SDA**: Connected to the SDA pin of the PCA9685 Breakout Board and the BNO085.  
+* **A5 \- D5 \- SCL**: Connected to the SCL pin of the PCA9685 Breakout Board and the BNO085.  
+* **A6 \- D6 \- TX**: Connected to the PWMA pin of the TB6612FNG Motor Driver.  
+* **A7 \- D7 \- RX**: Connected to the AI1 pin of the TB6612FNG Motor Driver.  
+* **A8 \- D8 \- SCK**: Connected to the STBY pin of the TB6612FNG Motor Driver.
 
-## Wiring Details
+### **Resistor (100k Ohms)**
 
-### Arduino UNO
+* **pin1**: Connected to the positive terminal of the USB power supply.  
+* **pin2**: Connected to pin2 of the 33k Ohms resistor.
 
-5V connected to:
+### **PCA9685 Breakout Board**
 
-    Trimmer Potentiometer (leg2)
+* **VCC**: Connected to the 3.3V power rail.  
+* **GND**: Connected to the common ground.  
+* **SCL**: Connected to the BNO085 and the Seeeduino XIAO pin A5 \- D5 \- SCL.  
+* **SDA**: Connected to the BNO085 and the Seeeduino XIAO pin A4 \- D4 \- SDA.  
+* **Out0**: Connected to the PWM pin of the Micro Servo 9G.  
+* **V+0**: Connected to the \+5V pin of the Micro Servo 9G.  
+* **GND0**: Connected to the GND pin of the Micro Servo 9G.
 
-    Adafruit PCA9685 PWM Servo Breakout (VCC)
+### **Motor N20 with Encoder**
 
-    Logic Level Converter (HV)
+* **Red:M2**: Connected to the A02 pin of the TB6612FNG Motor Driver.  
+* **Black:VCC**: Connected to the 3.3V power rail.  
+* **Yellow:C2**: Connected to the Seeeduino XIAO pin A0 \- D0 \- DAC.  
+* **Green:C1**: Connected to the Seeeduino XIAO pin A2 \- D2.  
+* **Blue:GND**: Connected to the common ground.  
+* **White:M1**: Connected to the A01 pin of the TB6612FNG Motor Driver.
 
-    TB6612FNG Motor Driver (VCC)
+## ---
 
-GND connected to:
+## **Code Documentation**
 
-    Logic Level Converter (GND)
+The Seeeduino XIAO is programmed to control the motor driver, read encoder feedback, and manage the servos and sensor data. The logic level converter ensures proper voltage levels between the Arduino and the BNO085 sensor. The code integrates motor positioning, servo actuation, and orientation sensing into a single real‑time control loop.
+The Compass class handles all orientation processing from the BNO085. Incoming quaternion data from various SH2 sensor report types (Rotation Vector, Game Rotation Vector, and Gyro‑Integrated Rotation Vector) is converted into Euler angles using quaternion mathematics. The class updates yaw, pitch, and roll values and provides convenience functions for computing heading relative to magnetic north. The conversion logic uses trigonometric functions to derive Euler angles and supports both radians and degrees.
+In the main program, the Seeeduino XIAO initializes the motor driver (TB6612FNG) and monitors its supply voltage through a resistor divider. It reads the rotary encoder to track the motor’s current position and compares it with a continuously integrated heading that represents total rotation. A proportional  and differential controller converts position error into PWM output to drive the motor forwards or backwards. A dead‑zone prevents unnecessary oscillation when the motor is near its target.
+The BNO085 IMU is polled for new orientation data; when new sensor events arrive, the Compass class updates its internal state. Pitch and roll values are used to position two servos, allowing the system to physically reflect the sensor’s orientation. The loop runs continuously, coordinating motor control, orientation tracking, and servo movement to maintain synchronized and smooth operation.
 
-    Motor N20 with Encoder (Blue:GND)
+## **Libraries used**
 
-    TB6612FNG Motor Driver (GND)
+  sparkfun/SparkFun BNO08x Cortex Based IMU@^1.0.6
+  arduino-libraries/Servo@^1.3.0
 
-    Adafruit PCA9685 PWM Servo Breakout (GND)
 
-    Trimmer Potentiometer (leg1)
+## **Testing**
 
-    D9 connected to TB6612FNG Motor Driver (STBY)
 
-    D5 connected to TB6612FNG Motor Driver (PWMA)
+The python program called protocoling_error.py was used to make a diagram of the error between target and measured  encoder value.
 
-    D4 connected to TB6612FNG Motor Driver (AI2)
+![Diagram](images/error_time_protocol_graphical_2nd.png)
 
-    D10 connected to TB6612FNG Motor Driver (AI1)
+Such a protocol can be used to optimize the PID parameters.
 
-    A0 connected to Trimmer Potentiometer (wiper)
+## **Ursina visualization**
 
-    A1 connected to Resistor (pin1 of 33k Ohms)
-
-3.3V connected to:
-
-    BNO055 (3vo)
-
-    Logic Level Converter (LV)
-
-    Motor N20 with Encoder (Black:VCC)
-
-    D3 connected to Motor N20 with Encoder (Green:C1)
-
-    D2 connected to Motor N20 with Encoder (Yellow:C2)
-
-A4 connected to:
-
-    Adafruit PCA9685 PWM Servo Breakout (SDA)
-
-    Logic Level Converter (HV4)
-
-A5 connected to:
-
-    Adafruit PCA9685 PWM Servo Breakout (SCL)
-
-    Logic Level Converter (HV2)
-
-### Trimmer Potentiometer
-
-leg2 connected to Arduino UNO (5V)
-
-wiper connected to Arduino UNO (A0)
-
-leg1 connected to:
-
-    Adafruit PCA9685 PWM Servo Breakout (OE)
-
-    Adafruit PCA9685 PWM Servo Breakout (GND)
-
-    Resistor (pin2 of 100k Ohms)
-
-    Arduino UNO (GND)
-
-### TB6612FNG Motor Driver
-
-VCC connected to Arduino UNO (5V)
-
-GND connected to:
-
-    Arduino UNO (GND)
-
-    USB C to 2 fils (-)
-
-STBY connected to Arduino UNO (D9)
-
-PWMA connected to Arduino UNO (D5)
-
-AI2 connected to Arduino UNO (D4)
-
-AI1 connected to Arduino UNO (D10)
-
-A02 connected to Motor N20 with Encoder (Red:M2)
-
-A01 connected to Motor N20 with Encoder (White:M1)
-
-VM connected to:
-
-    USB C to 2 fils (+)
-
-    Resistor (pin1 of 100k Ohms)
-
-### Motor N20 with Encoder
-
-Red:M2 connected to TB6612FNG Motor Driver (A02)
-
-White:M1 connected to TB6612FNG Motor Driver (A01)
-
-Blue:GND connected to Arduino UNO (GND)
-
-Black:VCC connected to Arduino UNO (3.3V)
-
-Green:C1 connected to Arduino UNO (D3)
-
-Yellow:C2 connected to Arduino UNO (D2)
-
-### USB C to 2 fils
-
-- connected to TB6612FNG Motor Driver (GND)
-
-+ connected to TB6612FNG Motor Driver (VM)
-
-### Resistor (100k Ohms)
-
-pin1 connected to TB6612FNG Motor Driver (VM)
-
-pin2 connected to Trimmer Potentiometer (leg1)
-
-### Resistor (33k Ohms)
-
-pin1 connected to Arduino UNO (A1)
-
-pin2 connected to Resistor (pin1 of 100k Ohms)
-
-### Logic Level Converter
-
-HV connected to Arduino UNO (5V)
-
-GND connected to Arduino UNO (GND)
-
-LV connected to Arduino UNO (3.3V)
-
-HV4 connected to Arduino UNO (A4)
-
-HV2 connected to Arduino UNO (A5)
-
-LV2 connected to BNO055 (SCL)
-
-LV4 connected to BNO055 (SDA)
-
-### BNO055
-
-3vo connected to Arduino UNO (3.3V)
-
-GND connected to Logic Level Converter (GND)
-
-SDA connected to Logic Level Converter (LV4)
-
-SCL connected to Logic Level Converter (LV2)
-
-### Micro Servo 9G
-
-GND connected to Adafruit PCA9685 PWM Servo Breakout (PWM0)
-
-+5V connected to Adafruit PCA9685 PWM Servo Breakout (5.0V)
-
-PWM connected to Adafruit PCA9685 PWM Servo Breakout (GND)
-
-### Adafruit PCA9685 PWM Servo Breakout
-
-VCC connected to Arduino UNO (5V)
-
-GND connected to Arduino UNO (GND)
-
-SDA connected to Arduino UNO (A4)
-
-SCL connected to Arduino UNO (A5)
-
-OE connected to Trimmer Potentiometer (leg1)
-
-PWM0 connected to Micro Servo 9G (GND)
-
-5.0V connected to Micro Servo 9G (+5V)
+The python program called imu_visualizer.py  was used to generate a stylized 3D model of the device on the screen to verify the correctness of the IMU sensor signals. You can see it in the YouTube demo video linked above. To do this, the currently commented-out command lines inside Compass.cpp (74-79), /* Serial.print("X: "); Serial.print(ypr_1.yaw); etc., must be enabled (i.e., the /* */ must be removed), and other Serial.print commands may need to be disabled.
 
 
 ![Visitor Count](https://komarev.com/ghpvc/?username=ReinhardLenz&repo=GyroVisor&color=green)
