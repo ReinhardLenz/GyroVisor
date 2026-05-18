@@ -13,20 +13,7 @@ http://raikkulenz.kapsi.fi/downloadfolder_not_protected/stl.zip
 
 http://raikkulenz.kapsi.fi/downloadfolder_not_protected/parts_stl.pdf 
 
-# picture of the whole GyroVisor
-http://raikkulenz.kapsi.fi/downloadfolder_not_protected/kokonaiskuva.pdf
 
-
-
-# Photo
-
-![Diagram](images/small_breadboard_seeeduino_xiao.jpg)
-
-
-![Diagram](images/small_breadboard_seeeduino_xiao_side_front.jpg)
-
-
-![Diagram](images/small_breadboard_seeeduino_xiao_side.jpg)
 
 
 # Shopping list link collection
